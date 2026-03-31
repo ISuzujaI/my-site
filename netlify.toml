@@ -22,3 +22,4 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  NPM_FLAGS = "--production=false"
