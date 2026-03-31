@@ -1,0 +1,222 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Фирменные цвета Abuvet */
+  --beige: #F0EDE6;
+  --green: #8D957E;
+  --mint: #DADED2;
+  --purple: #7E5565;
+  
+  /* Шрифты */
+  --font-heading: 'Bebas Neue', 'Arial Black', sans-serif;
+  --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  --font-size: 16px;
+  
+  /* Основные цвета темы - используем фирменную палитру */
+  --background: #F0EDE6; /* Бежевый фон */
+  --foreground: #7E5565; /* Фиолетовый текст */
+  
+  --card: #FFFFFF;
+  --card-foreground: #7E5565;
+  
+  --popover: #FFFFFF;
+  --popover-foreground: #7E5565;
+  
+  --primary: #8D957E; /* Зеленый */
+  --primary-foreground: #FFFFFF;
+  
+  --secondary: #DADED2; /* Ментол */
+  --secondary-foreground: #7E5565;
+  
+  --muted: #DADED2;
+  --muted-foreground: #8D957E;
+  
+  --accent: #7E5565; /* Фиолетовый для акцентов */
+  --accent-foreground: #FFFFFF;
+  
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  
+  --border: #8D957E; /* Зеленый для границ */
+  --input: transparent;
+  --input-background: #FFFFFF;
+  --switch-background: #8D957E;
+  
+  --font-weight-bold: 800;
+  --font-weight-semibold: 600;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  
+  --ring: #8D957E;
+  
+  --chart-1: #8D957E;
+  --chart-2: #7E5565;
+  --chart-3: #DADED2;
+  --chart-4: #F0EDE6;
+  --chart-5: #A8B39E;
+  
+  --radius: 0.75rem;
+  
+  --sidebar: #DADED2;
+  --sidebar-foreground: #7E5565;
+  --sidebar-primary: #8D957E;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F0EDE6;
+  --sidebar-accent-foreground: #7E5565;
+  --sidebar-border: #8D957E;
+  --sidebar-ring: #8D957E;
+}
+
+.dark {
+  --background: #2a2a2a;
+  --foreground: #F0EDE6;
+  --card: #333333;
+  --card-foreground: #F0EDE6;
+  --popover: #333333;
+  --popover-foreground: #F0EDE6;
+  --primary: #8D957E;
+  --primary-foreground: #FFFFFF;
+  --secondary: #7E5565;
+  --secondary-foreground: #F0EDE6;
+  --muted: #3a3a3a;
+  --muted-foreground: #DADED2;
+  --accent: #7E5565;
+  --accent-foreground: #F0EDE6;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: #8D957E;
+  --input: #3a3a3a;
+  --ring: #8D957E;
+  --sidebar: #2a2a2a;
+  --sidebar-foreground: #F0EDE6;
+  --sidebar-primary: #8D957E;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #3a3a3a;
+  --sidebar-accent-foreground: #F0EDE6;
+  --sidebar-border: #8D957E;
+  --sidebar-ring: #8D957E;
+}
+
+@theme inline {
+  --color-beige: var(--beige);
+  --color-green: var(--green);
+  --color-mint: var(--mint);
+  --color-purple: var(--purple);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  /**
+  * Default typography styles for HTML elements (h1-h4, p, label, button, input).
+  * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
+  */
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.3;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 1.4;
+  }
+
+  h4 {
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.4;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-normal);
+  }
+
+  label {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.5;
+  }
+
+  button {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.5;
+  }
+
+  input {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+  }
+}

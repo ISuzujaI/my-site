@@ -1,0 +1,14 @@
+/* Aukim Extra Bold - для заголовков */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap');
+
+/* Временно используем похожий шрифт Bebas Neue вместо Aukim, пока не загружен кастомный */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+@font-face {
+  font-family: 'Aukim';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  /* Если у вас есть файл шрифта Aukim, добавьте его здесь */
+  /* src: url('/fonts/aukim-extrabold.woff2') format('woff2'); */
+}
