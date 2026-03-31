@@ -1,5 +1,6 @@
 [build]
-  command = "npm run build"
+  install = "npm ci --include=dev"
+  command = "node ./node_modules/vite/bin/vite.js build"
   publish = "dist"
 
 [[redirects]]
