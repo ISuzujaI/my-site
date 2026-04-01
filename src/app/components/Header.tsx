@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { Menu, X, User } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -14,20 +14,18 @@ export function Header() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 bg-beige shadow-sm border-b-2 border-green">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+    <header className="abuvet-header sticky top-0 z-50 border-b border-purple/10 bg-beige/95 backdrop-blur">
+      <div className="abuvet-container">
+        <div className="flex min-h-20 items-center justify-between gap-4 py-3">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Abuvet" className="w-12 h-12 object-contain" />
-            <span className="text-2xl font-bold text-purple" style={{ fontFamily: 'var(--font-heading)' }}>ABUVET</span>
+            <img src={logo} alt="Abuvet" className="h-10 w-10 object-contain" />
+            <span className="text-3xl leading-none text-purple" style={{ fontFamily: 'var(--font-heading)' }}>ABU</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden items-center gap-6 lg:flex">
             <Link
               to="/"
-              className={`font-semibold transition-colors ${ 
+              className={`text-sm font-semibold transition-colors ${
                 isActive('/') ? 'text-green' : 'text-purple hover:text-green'
               }`}
             >
@@ -77,47 +75,44 @@ export function Header() {
             </Link>
           </nav>
 
-          {/* Right Side */}
-          <div className="hidden lg:flex items-center gap-4">
-            {/* Language Switcher */}
+          <div className="hidden items-center gap-3 lg:flex">
             <div className="flex gap-2">
               <button
                 onClick={() => setLanguage('lv')}
-                className={`px-3 py-1.5 rounded font-semibold ${
+                className={`abuvet-pill px-3 py-1 ${
                   language === 'lv'
-                    ? 'bg-green text-white'
-                    : 'bg-mint text-purple hover:bg-green hover:text-white'
+                    ? 'border-purple bg-purple text-white'
+                    : 'bg-beige hover:border-green hover:text-green'
                 }`}
               >
                 LV
               </button>
               <button
                 onClick={() => setLanguage('ru')}
-                className={`px-3 py-1.5 rounded font-semibold ${
+                className={`abuvet-pill px-3 py-1 ${
                   language === 'ru'
-                    ? 'bg-green text-white'
-                    : 'bg-mint text-purple hover:bg-green hover:text-white'
+                    ? 'border-purple bg-purple text-white'
+                    : 'bg-beige hover:border-green hover:text-green'
                 }`}
               >
                 RU
               </button>
               <button
                 onClick={() => setLanguage('en')}
-                className={`px-3 py-1.5 rounded font-semibold ${
+                className={`abuvet-pill px-3 py-1 ${
                   language === 'en'
-                    ? 'bg-green text-white'
-                    : 'bg-mint text-purple hover:bg-green hover:text-white'
+                    ? 'border-purple bg-purple text-white'
+                    : 'bg-beige hover:border-green hover:text-green'
                 }`}
               >
                 EN
               </button>
             </div>
 
-            {/* User Menu */}
             {isAuthenticated ? (
               <Link
                 to="/profile"
-                className="flex items-center gap-2 px-4 py-2 bg-green text-white rounded-lg hover:bg-purple transition-colors font-semibold"
+                className="abuvet-button"
               >
                 <User className="w-4 h-4" />
                 {user?.name.split(' ')[0]}
@@ -125,25 +120,23 @@ export function Header() {
             ) : (
               <Link
                 to="/booking"
-                className="px-6 py-2 bg-green text-white rounded-lg hover:bg-purple transition-colors font-semibold"
+                className="abuvet-button"
               >
                 {t('hero.cta')}
               </Link>
             )}
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 text-purple"
+            className="rounded-full border border-purple/20 bg-beige p-2 text-purple lg:hidden"
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t-2 border-green">
+          <div className="abuvet-surface mb-4 p-4 lg:hidden">
             <nav className="flex flex-col gap-4">
               <Link
                 to="/"
@@ -198,40 +191,39 @@ export function Header() {
               )}
               <Link
                 to="/booking"
-                className="px-6 py-2 bg-green text-white rounded-lg hover:bg-purple text-center font-semibold"
+                className="abuvet-button text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t('hero.cta')}
               </Link>
 
-              {/* Language Switcher Mobile */}
-              <div className="flex gap-2 pt-4 border-t-2 border-green">
+              <div className="flex gap-2 border-t border-purple/10 pt-4">
                 <button
                   onClick={() => setLanguage('lv')}
-                  className={`px-3 py-2 rounded font-semibold ${
+                  className={`abuvet-pill px-3 py-2 ${
                     language === 'lv'
-                      ? 'bg-green text-white'
-                      : 'bg-mint text-purple'
+                      ? 'border-purple bg-purple text-white'
+                      : 'bg-beige'
                   }`}
                 >
                   LV
                 </button>
                 <button
                   onClick={() => setLanguage('ru')}
-                  className={`px-3 py-2 rounded font-semibold ${
+                  className={`abuvet-pill px-3 py-2 ${
                     language === 'ru'
-                      ? 'bg-green text-white'
-                      : 'bg-mint text-purple'
+                      ? 'border-purple bg-purple text-white'
+                      : 'bg-beige'
                   }`}
                 >
                   RU
                 </button>
                 <button
                   onClick={() => setLanguage('en')}
-                  className={`px-3 py-2 rounded font-semibold ${
+                  className={`abuvet-pill px-3 py-2 ${
                     language === 'en'
-                      ? 'bg-green text-white'
-                      : 'bg-mint text-purple'
+                      ? 'border-purple bg-purple text-white'
+                      : 'bg-beige'
                   }`}
                 >
                   EN

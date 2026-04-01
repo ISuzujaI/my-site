@@ -461,15 +461,15 @@ export function AdminPanel() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4">
+    <div className="abuvet-page py-12">
+      <div className="abuvet-container">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-4xl font-bold mb-2" style={{ fontFamily: 'var(--font-heading)' }}>
+            <h1 className="text-4xl text-purple mb-2" style={{ fontFamily: 'var(--font-heading)' }}>
               {t('admin.title')}
             </h1>
-            <p className="text-gray-600">
+            <p className="text-purple/75">
               {language === 'lv' && 'Pārvaldiet klīnikas datus un iestatījumus'}
               {language === 'ru' && 'Управляйте данными и настройками клиники'}
               {language === 'en' && 'Manage clinic data and settings'}
@@ -485,8 +485,8 @@ export function AdminPanel() {
           )}
 
           {/* Tabs */}
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="border-b">
+          <div className="abuvet-surface overflow-hidden">
+            <div className="border-b border-purple/15">
               <div className="flex overflow-x-auto">
                 {tabs.map((tab) => {
                   const Icon = tab.icon;
@@ -496,8 +496,8 @@ export function AdminPanel() {
                       onClick={() => setActiveTab(tab.id)}
                       className={`flex items-center gap-2 px-6 py-4 font-medium whitespace-nowrap transition-colors ${
                         activeTab === tab.id
-                          ? 'text-green border-b-2 border-green bg-mint/30'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                          ? 'text-green border-b-2 border-green bg-mint/40'
+                          : 'text-purple/75 hover:text-purple hover:bg-beige/60'
                       }`}
                     >
                       <Icon className="w-5 h-5" />
@@ -513,14 +513,14 @@ export function AdminPanel() {
               {activeTab === 'doctors' && (
                 <div>
                   <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold">
+                    <h2 className="text-2xl text-purple">
                       {language === 'lv' && 'Ārstu pārvaldība'}
                       {language === 'ru' && 'Управление врачами'}
                       {language === 'en' && 'Manage Doctors'}
                     </h2>
                     <button 
                       onClick={handleAddDoctor}
-                      className="flex items-center gap-2 px-4 py-2 bg-green text-white rounded-lg hover:bg-purple transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 bg-purple text-white rounded-full hover:bg-green transition-colors"
                     >
                       <Plus className="w-4 h-4" />
                       {t('common.add')}
@@ -530,19 +530,19 @@ export function AdminPanel() {
                   {loading ? (
                     <div className="text-center py-12">
                       <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green"></div>
-                      <p className="mt-4 text-gray-600">{t('common.loading')}</p>
+                      <p className="mt-4 text-purple/75">{t('common.loading')}</p>
                     </div>
                   ) : doctors.length === 0 ? (
-                    <div className="text-center py-12 bg-gray-50 rounded-lg">
-                      <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-600 mb-4">
+                    <div className="text-center py-12 bg-mint/20 rounded-2xl">
+                      <Users className="w-16 h-16 text-purple/45 mx-auto mb-4" />
+                      <p className="text-purple/75 mb-4">
                         {language === 'lv' && 'Nav pievienotu ārstu'}
                         {language === 'ru' && 'Нет добавленных врачей'}
                         {language === 'en' && 'No doctors added'}
                       </p>
                       <button 
                         onClick={handleAddDoctor}
-                        className="px-4 py-2 bg-green text-white rounded-lg hover:bg-purple transition-colors"
+                        className="px-4 py-2 bg-purple text-white rounded-full hover:bg-green transition-colors"
                       >
                         {language === 'lv' && 'Pievienot pirmo ārstu'}
                         {language === 'ru' && 'Добавить первого врача'}
@@ -570,7 +570,7 @@ export function AdminPanel() {
                             )}
                             <div>
                               <h3 className="font-semibold text-purple">{doctor.name}</h3>
-                              <p className="text-sm text-gray-600">
+                              <p className="text-sm text-purple/70">
                                 {doctor.specialty[language]} • {doctor.experience} {t('doctors.experience')}
                               </p>
                             </div>
@@ -579,7 +579,7 @@ export function AdminPanel() {
                             <span className={`px-3 py-1 rounded-full text-sm ${
                               doctor.active 
                                 ? 'bg-green/20 text-green' 
-                                : 'bg-gray-200 text-gray-600'
+                                : 'bg-purple/15 text-purple/75'
                             }`}>
                               {doctor.active 
                                 ? (language === 'lv' ? 'Aktīvs' : language === 'ru' ? 'Активен' : 'Active')
@@ -612,14 +612,14 @@ export function AdminPanel() {
               {activeTab === 'services' && (
                 <div>
                   <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-bold">
+                    <h2 className="text-2xl text-purple">
                       {language === 'lv' && 'Pakalpojumu pārvaldība'}
                       {language === 'ru' && 'Управление услугами'}
                       {language === 'en' && 'Manage Services'}
                     </h2>
                     <button 
                       onClick={handleAddService}
-                      className="flex items-center gap-2 px-4 py-2 bg-green text-white rounded-lg hover:bg-purple transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 bg-purple text-white rounded-full hover:bg-green transition-colors"
                     >
                       <Plus className="w-4 h-4" />
                       {t('common.add')}
@@ -629,19 +629,19 @@ export function AdminPanel() {
                   {loading ? (
                     <div className="text-center py-12">
                       <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green"></div>
-                      <p className="mt-4 text-gray-600">{t('common.loading')}</p>
+                      <p className="mt-4 text-purple/75">{t('common.loading')}</p>
                     </div>
                   ) : services.length === 0 ? (
-                    <div className="text-center py-12 bg-gray-50 rounded-lg">
-                      <Settings className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-600 mb-4">
+                    <div className="text-center py-12 bg-mint/20 rounded-2xl">
+                      <Settings className="w-16 h-16 text-purple/45 mx-auto mb-4" />
+                      <p className="text-purple/75 mb-4">
                         {language === 'lv' && 'Nav pievienotu pakalpojumu'}
                         {language === 'ru' && 'Нет добавленных услуг'}
                         {language === 'en' && 'No services added'}
                       </p>
                       <button 
                         onClick={handleAddService}
-                        className="px-4 py-2 bg-green text-white rounded-lg hover:bg-purple transition-colors"
+                        className="px-4 py-2 bg-purple text-white rounded-full hover:bg-green transition-colors"
                       >
                         {language === 'lv' && 'Pievienot pirmo pakalpojumu'}
                         {language === 'ru' && 'Добавить первую услугу'}
@@ -669,7 +669,7 @@ export function AdminPanel() {
                             )}
                             <div>
                               <h3 className="font-semibold text-purple">{service.name[language]}</h3>
-                              <p className="text-sm text-gray-600">
+                              <p className="text-sm text-purple/70">
                                 {service.description[language]} • {service.price} {t('services.price')}
                               </p>
                             </div>
@@ -678,7 +678,7 @@ export function AdminPanel() {
                             <span className={`px-3 py-1 rounded-full text-sm ${
                               service.active 
                                 ? 'bg-green/20 text-green' 
-                                : 'bg-gray-200 text-gray-600'
+                                : 'bg-purple/15 text-purple/75'
                             }`}>
                               {service.active 
                                 ? (language === 'lv' ? 'Aktīvs' : language === 'ru' ? 'Активен' : 'Active')
@@ -729,7 +729,7 @@ export function AdminPanel() {
                         )}
                         <div>
                           <h3 className="font-semibold text-purple">{doctor.name}</h3>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-purple/70">
                             {doctor.specialty[language]} • {doctor.experience} {t('doctors.experience')}
                           </p>
                         </div>
@@ -738,7 +738,7 @@ export function AdminPanel() {
                         <span className={`px-3 py-1 rounded-full text-sm ${
                           doctor.active 
                             ? 'bg-green/20 text-green' 
-                            : 'bg-gray-200 text-gray-600'
+                            : 'bg-purple/15 text-purple/75'
                         }`}>
                           {doctor.active 
                             ? (language === 'lv' ? 'Aktīvs' : language === 'ru' ? 'Активен' : 'Active')
@@ -764,12 +764,12 @@ export function AdminPanel() {
                   {loading ? (
                     <div className="text-center py-12">
                       <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green"></div>
-                      <p className="mt-4 text-gray-600">{t('common.loading')}</p>
+                      <p className="mt-4 text-purple/75">{t('common.loading')}</p>
                     </div>
                   ) : appointments.length === 0 ? (
                     <div className="text-center py-12 bg-mint/20 rounded-lg">
                       <Calendar className="w-16 h-16 text-green mx-auto mb-4" />
-                      <p className="text-gray-700">
+                      <p className="text-purple/80">
                         {language === 'lv' && 'Nav pierakstu'}
                         {language === 'ru' && 'Нет записей'}
                         {language === 'en' && 'No appointments'}
@@ -794,10 +794,10 @@ export function AdminPanel() {
                                 <h3 className="font-semibold text-purple">
                                   {appointment.userName || appointment.userEmail}
                                 </h3>
-                                <p className="text-sm text-gray-600">
+                                <p className="text-sm text-purple/75">
                                   {doctorName} • {appointment.date} {appointment.time}
                                 </p>
-                                <p className="text-xs text-gray-500">
+                                <p className="text-xs text-purple/60">
                                   {t(`services.${appointment.serviceId}`) || appointment.serviceId}
                                 </p>
                               </div>

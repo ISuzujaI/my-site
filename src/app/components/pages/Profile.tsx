@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Navigate, Link } from 'react-router';
-import { User, Calendar, Clock, Mail, LogOut, X } from 'lucide-react';
+import { User, Calendar, Clock, LogOut } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { projectId, publicAnonKey } from '/utils/supabase/info';
@@ -23,7 +23,7 @@ export function Profile() {
   const { user, logout, isAuthenticated } = useAuth();
 
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [doctors, setDoctors] = useState<any[]>([]);
 
   const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-de695671`;
@@ -166,25 +166,24 @@ export function Profile() {
   const pastAppointments = appointments.filter((apt) => apt.status === 'completed');
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4">
+    <div className="abuvet-page py-12">
+      <div className="abuvet-container">
         <div className="max-w-5xl mx-auto">
-          {/* Header */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
+          <div className="abuvet-surface p-8 mb-8">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center">
-                  <User className="w-10 h-10 text-blue-600" />
+                <div className="w-20 h-20 bg-mint rounded-full flex items-center justify-center">
+                  <User className="w-10 h-10 text-green" />
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold mb-1">{user?.name}</h1>
-                  <p className="text-gray-600">{user?.email}</p>
-                  <p className="text-gray-600">{user?.phone}</p>
+                  <h1 className="text-3xl font-bold mb-1 text-purple">{user?.name}</h1>
+                  <p className="text-purple/75">{user?.email}</p>
+                  <p className="text-purple/75">{user?.phone}</p>
                 </div>
               </div>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
               >
                 <LogOut className="w-4 h-4" />
                 {t('profile.logout')}
@@ -192,11 +191,10 @@ export function Profile() {
             </div>
           </div>
 
-          {/* Admin Link */}
           {user?.isAdmin && (
             <Link
               to="/admin"
-              className="block bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl shadow-lg p-6 mb-8 hover:shadow-xl transition-shadow"
+              className="block bg-purple text-white rounded-2xl shadow-lg p-6 mb-8 hover:bg-green transition-colors"
             >
               <h2 className="text-2xl font-bold mb-2">{t('admin.title')}</h2>
               <p className="opacity-90">
@@ -207,20 +205,19 @@ export function Profile() {
             </Link>
           )}
 
-          {/* Upcoming Appointments */}
-          <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-bold mb-6">{t('profile.upcoming')}</h2>
+          <div className="abuvet-surface p-8 mb-8">
+            <h2 className="text-2xl text-purple mb-6">{t('profile.upcoming')}</h2>
             {upcomingAppointments.length === 0 ? (
               <div className="text-center py-8">
-                <Calendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500 mb-4">
+                <Calendar className="w-16 h-16 text-purple/35 mx-auto mb-4" />
+                <p className="text-purple/65 mb-4">
                   {language === 'lv' && 'Nav gaidāmo pierakstu'}
                   {language === 'ru' && 'Нет предстоящих записей'}
                   {language === 'en' && 'No upcoming appointments'}
                 </p>
                 <Link
                   to="/booking"
-                  className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                  className="inline-block px-6 py-3 bg-purple text-white rounded-full hover:bg-green transition-colors font-medium"
                 >
                   {t('hero.cta')}
                 </Link>
@@ -230,14 +227,14 @@ export function Profile() {
                 {upcomingAppointments.map((appointment) => (
                   <div
                     key={appointment.id}
-                    className="border border-gray-200 rounded-lg p-6 hover:border-blue-300 transition-colors"
+                    className="border border-purple/15 rounded-2xl p-6 hover:border-green/50 transition-colors"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h3 className="text-xl font-semibold mb-3">
+                        <h3 className="text-xl text-purple mb-3">
                           {getServiceName(appointment.serviceId)}
                         </h3>
-                        <div className="space-y-2 text-gray-600">
+                        <div className="space-y-2 text-purple/75">
                           <div className="flex items-center gap-2">
                             <User className="w-4 h-4" />
                             <span>{getDoctorName(appointment.doctorId)}</span>
@@ -267,12 +264,11 @@ export function Profile() {
             )}
           </div>
 
-          {/* Past Appointments */}
-          <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h2 className="text-2xl font-bold mb-6">{t('profile.history')}</h2>
+          <div className="abuvet-surface p-8">
+            <h2 className="text-2xl text-purple mb-6">{t('profile.history')}</h2>
             {pastAppointments.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-gray-500">
+                <p className="text-purple/65">
                   {language === 'lv' && 'Nav iepriekšējo apmeklējumu'}
                   {language === 'ru' && 'Нет прошлых посещений'}
                   {language === 'en' && 'No past visits'}
@@ -283,14 +279,14 @@ export function Profile() {
                 {pastAppointments.map((appointment) => (
                   <div
                     key={appointment.id}
-                    className="border border-gray-200 rounded-lg p-6 bg-gray-50"
+                    className="border border-purple/15 rounded-2xl p-6 bg-beige"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h3 className="text-xl font-semibold mb-3">
+                        <h3 className="text-xl text-purple mb-3">
                           {getServiceName(appointment.serviceId)}
                         </h3>
-                        <div className="space-y-2 text-gray-600">
+                        <div className="space-y-2 text-purple/75">
                           <div className="flex items-center gap-2">
                             <User className="w-4 h-4" />
                             <span>{getDoctorName(appointment.doctorId)}</span>

@@ -175,7 +175,7 @@ export function EditableImage({
 
       {isEditing && (
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded">
-          <div className="bg-white p-4 rounded-lg shadow-xl">
+          <div className="bg-beige p-4 rounded-lg shadow-xl">
             <h3 className="text-lg font-bold text-purple mb-4">Загрузить новое изображение</h3>
             
             <input
@@ -224,3 +224,4 @@ export function EditableImage({
     </div>
   );
 }
+

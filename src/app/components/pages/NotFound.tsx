@@ -6,15 +6,15 @@ export function NotFound() {
   const { language } = useLanguage();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50">
+    <div className="abuvet-page flex items-center justify-center px-4">
       <div className="text-center px-4">
-        <h1 className="text-9xl font-bold text-blue-600 mb-4">404</h1>
-        <h2 className="text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="text-9xl text-green mb-4" style={{ fontFamily: 'var(--font-heading)' }}>404</h1>
+        <h2 className="text-4xl text-purple mb-4">
           {language === 'lv' && 'Lapa nav atrasta'}
           {language === 'ru' && 'Страница не найдена'}
           {language === 'en' && 'Page Not Found'}
         </h2>
-        <p className="text-xl text-gray-600 mb-8 max-w-md mx-auto">
+        <p className="text-xl text-purple/75 mb-8 max-w-md mx-auto">
           {language === 'lv' &&
             'Diemžēl lapa, kuru meklējat, nepastāv vai tika pārvietota'}
           {language === 'ru' &&
@@ -25,7 +25,7 @@ export function NotFound() {
         <div className="flex gap-4 justify-center">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-purple text-white rounded-full hover:bg-green transition-colors font-medium"
           >
             <Home className="w-5 h-5" />
             {language === 'lv' && 'Uz sākumu'}
@@ -34,7 +34,7 @@ export function NotFound() {
           </Link>
           <button
             onClick={() => window.history.back()}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 border-2 border-blue-600 rounded-lg hover:bg-blue-50 transition-colors font-medium"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-beige text-purple border-2 border-purple/30 rounded-full hover:border-green hover:text-green transition-colors font-medium"
           >
             <ArrowLeft className="w-5 h-5" />
             {language === 'lv' && 'Atpakaļ'}
@@ -46,3 +46,4 @@ export function NotFound() {
     </div>
   );
 }
+

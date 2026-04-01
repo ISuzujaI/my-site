@@ -263,12 +263,11 @@ export function Prices() {
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Hero */}
-      <section className="relative bg-gradient-to-br from-beige via-mint to-beige py-20">
-        <div className="container mx-auto px-4">
+    <div className="abuvet-page py-10">
+      <section className="abuvet-container">
+        <div className="abuvet-soft-surface px-6 py-12 sm:px-10 text-center">
           <h1 className="text-5xl font-bold text-center mb-6 text-purple">{t('prices.title')}</h1>
-          <p className="text-xl text-gray-600 text-center max-w-3xl mx-auto">
+          <p className="text-xl text-purple/80 text-center max-w-3xl mx-auto">
             {language === 'lv' &&
               'Caurspīdīgas cenas kvalitatīviem veterinārajiem pakalpojumiem'}
             {language === 'ru' && 'Прозрачные цены на качественные ветеринарные услуги'}
@@ -277,14 +276,13 @@ export function Prices() {
         </div>
       </section>
 
-      {/* Prices */}
       <section className="py-20 bg-beige">
-        <div className="container mx-auto px-4">
+        <div className="abuvet-container">
           <div className="max-w-5xl mx-auto space-y-8">
             {priceCategories.map((category, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div className="bg-gradient-to-r from-green via-purple to-green text-white px-8 py-4">
-                  <h2 className="text-2xl font-bold">{category.category[language]}</h2>
+              <div key={index} className="abuvet-surface overflow-hidden">
+                <div className="bg-mint/55 text-purple px-8 py-4 border-b border-purple/15">
+                  <h2 className="text-2xl">{category.category[language]}</h2>
                 </div>
                 <div className="p-8">
                   <div className="space-y-4">
@@ -293,7 +291,7 @@ export function Prices() {
                         key={serviceIndex}
                         className="flex justify-between items-center py-4 border-b border-mint last:border-0"
                       >
-                        <span className="text-gray-700 text-lg">{service.name[language]}</span>
+                        <span className="text-purple/85 text-lg">{service.name[language]}</span>
                         <span className="text-green font-semibold text-xl">
                           {service.price}
                         </span>
@@ -305,14 +303,13 @@ export function Prices() {
             ))}
           </div>
 
-          {/* Info Box */}
-          <div className="max-w-5xl mx-auto mt-12 bg-mint rounded-2xl p-8 border-2 border-green">
+          <div className="max-w-5xl mx-auto mt-12 bg-mint/60 rounded-2xl p-8 border-2 border-green/40">
             <h3 className="text-2xl font-bold mb-4 text-purple">
               {language === 'lv' && 'Svarīga informācija'}
               {language === 'ru' && 'Важная информация'}
               {language === 'en' && 'Important information'}
             </h3>
-            <ul className="space-y-2 text-gray-700">
+            <ul className="space-y-2 text-purple/80">
               <li>
                 • {language === 'lv' && 'Cenas ir orientējošas un var mainīties atkarībā no gadījuma sarežģītības'}
                 {language === 'ru' && 'Цены являются ориентировочными и могут меняться в зависимости от сложности случая'}
@@ -336,9 +333,8 @@ export function Prices() {
             </ul>
           </div>
 
-          {/* CTA */}
           <div className="max-w-5xl mx-auto mt-12 text-center">
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-purple/80 mb-6">
               {language === 'lv' &&
                 'Ir jautājumi par cenām? Sazinieties ar mums vai rezervējiet vizīti!'}
               {language === 'ru' &&
@@ -349,14 +345,14 @@ export function Prices() {
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 to="/booking"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-green text-white rounded-lg hover:bg-purple transition-colors font-semibold text-lg"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-purple text-white rounded-full hover:bg-green transition-colors font-semibold text-lg"
               >
                 {t('hero.cta')}
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 to="/contact"
-                className="px-8 py-4 bg-white text-purple border-2 border-purple rounded-lg hover:bg-mint transition-colors font-semibold text-lg"
+                className="px-8 py-4 bg-beige text-purple border-2 border-purple/35 rounded-full hover:border-green hover:text-green transition-colors font-semibold text-lg"
               >
                 {t('contact.title')}
               </Link>

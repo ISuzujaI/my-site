@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Heart, Award, Clock, Shield, Star, ArrowRight } from 'lucide-react';
+import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useEditMode } from '../../context/EditModeContext';
 import { useAuth } from '../../context/AuthContext';
@@ -7,147 +7,260 @@ import { EditableText } from '../EditableText';
 import { SmartImage } from '../SmartImage';
 
 export function Home() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { isEditMode } = useEditMode();
   const { user } = useAuth();
 
   const features = [
     {
-      icon: Award,
-      title: t('why.modern'),
-      description: t('why.modern.desc'),
-      color: 'green',
+      title: {
+        lv: 'Pieredzējuši speciālisti',
+        ru: 'Опытные специалисты',
+        en: 'Experienced specialists',
+      },
+      description: {
+        lv: 'Profesionāli ārsti un pieredzējuši speciālisti',
+        ru: 'Профессиональные врачи и опытные специалисты',
+        en: 'Professional doctors and experienced specialists',
+      },
+      solid: false,
     },
     {
-      icon: Heart,
-      title: t('why.experienced'),
-      description: t('why.experienced.desc'),
-      color: 'purple',
+      title: {
+        lv: 'Neatliekamā palīdzība 24/7',
+        ru: 'Неотложная помощь 24/7',
+        en: 'Emergency care 24/7',
+      },
+      description: {
+        lv: 'Profesionāli ārsti un pieredzējuši speciālisti',
+        ru: 'Профессиональные врачи и опытные специалисты',
+        en: 'Professional doctors and experienced specialists',
+      },
+      solid: true,
     },
     {
-      icon: Clock,
-      title: t('why.emergency'),
-      description: t('why.emergency.desc'),
-      color: 'green',
+      title: {
+        lv: 'Moderns aprīkojums',
+        ru: 'Современное оборудование',
+        en: 'Modern equipment',
+      },
+      description: {
+        lv: 'Profesionāli ārsti un pieredzējuši speciālisti',
+        ru: 'Профессиональные врачи и опытные специалисты',
+        en: 'Professional doctors and experienced specialists',
+      },
+      solid: true,
     },
     {
-      icon: Shield,
-      title: t('why.care'),
-      description: t('why.care.desc'),
-      color: 'purple',
+      title: {
+        lv: 'Individuāla pieeja',
+        ru: 'Индивидуальный подход',
+        en: 'Individual approach',
+      },
+      description: {
+        lv: 'Profesionāli ārsti un pieredzējuši speciālisti',
+        ru: 'Профессиональные врачи и опытные специалисты',
+        en: 'Professional doctors and experienced specialists',
+      },
+      solid: false,
     },
   ];
 
   const stats = [
-    { value: '15+', label: t('about.experience') },
-    { value: '12', label: t('about.doctors') },
-    { value: '5000+', label: t('about.patients') },
+    {
+      value: '15+',
+      label: {
+        lv: 'Gadu pieredze',
+        ru: 'Лет опыта',
+        en: 'Years of experience',
+      },
+    },
+    {
+      value: '3000+',
+      label: {
+        lv: 'Izglābtas dzīvības',
+        ru: 'Спасенных жизней',
+        en: 'Saved lives',
+      },
+    },
+    {
+      value: '1000+',
+      label: {
+        lv: 'Veiktas operācijas',
+        ru: 'Проведено операций',
+        en: 'Operations completed',
+      },
+    },
+    {
+      value: '5',
+      label: {
+        lv: 'Profesionāli ārsti un pieredzējuši speciālisti',
+        ru: 'Профессиональных врачей и специалистов',
+        en: 'Professional doctors and specialists',
+      },
+    },
   ];
 
   const services = [
     {
-      key: 'therapy',
-      image: 'https://images.unsplash.com/photo-1621371236495-1520d8dc72a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXQlMjB2ZXRlcmluYXJ5JTIwY2xpbmljfGVufDF8fHx8MTc3Mzk5Nzk0Mnww&ixlib=rb-4.1.0&q=80&w=1080',
+      key: 'surgery',
+      title: {
+        lv: 'Ķirurģija',
+        ru: 'Хирургия',
+        en: 'Surgery',
+      },
+      description: {
+        lv: 'Plānveida un neatliekamās operācijas',
+        ru: 'Плановые и неотложные операции',
+        en: 'Planned and emergency operations',
+      },
+      image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=1200&q=80',
+      tall: true,
+      tint: 'bg-mint',
     },
     {
-      key: 'surgery',
-      image: 'https://images.unsplash.com/photo-1770836037326-d2df574278b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2ZXRlcmluYXJ5JTIwc3VyZ2VyeSUyMHJvb218ZW58MXx8fHwxNzczOTAwNjIzfDA&ixlib=rb-4.1.0&q=80&w=1080',
+      key: 'therapy',
+      title: {
+        lv: 'Terapija',
+        ru: 'Терапия',
+        en: 'Therapy',
+      },
+      description: {
+        lv: 'Vispārējā diagnostika, ārstēšana un profilakse.',
+        ru: 'Общая диагностика, лечение и профилактика.',
+        en: 'General diagnostics, treatment and prevention.',
+      },
+      image: 'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80',
+      tall: false,
     },
     {
       key: 'diagnostics',
-      image: 'https://images.unsplash.com/photo-1682663947127-ac9d59d7f312?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2ZXRlcmluYXJ5JTIwZXF1aXBtZW50JTIwbW9kZXJufGVufDF8fHx8MTc3Mzk5Nzk0Mnww&ixlib=rb-4.1.0&q=80&w=1080',
+      title: {
+        lv: 'Diagnostika',
+        ru: 'Диагностика',
+        en: 'Diagnostics',
+      },
+      description: {
+        lv: 'Laboratorijas testi, ultraskaņa, rentgens',
+        ru: 'Лабораторные тесты, УЗИ, рентген',
+        en: 'Laboratory tests, ultrasound, X-ray',
+      },
+      image: 'https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=1200&q=80',
+      tall: false,
     },
   ];
 
-  const reviews = [
-    {
-      name: 'Anna Liepiņa',
-      rating: 5,
-      text: 'Brīnišķīga klīnika! Ārsti ir ļoti profesionāli un rūpīgi. Mans suns tika labi aprūpēts.',
-      date: '2026-03-15',
+  const hero = {
+    badge: {
+      lv: 'Veterinārā klīnika',
+      ru: 'Ветеринарная клиника',
+      en: 'Veterinary clinic',
     },
-    {
-      name: 'Jānis Bērziņš',
-      rating: 5,
-      text: 'Ātrs un kvalitatīvs serviss. Paldies par palīdzību mūsu kaķim!',
-      date: '2026-03-10',
+    title: {
+      lv: 'Profesionāla veterinārā aprūpe',
+      ru: 'Профессиональная ветеринарная помощь',
+      en: 'Professional veterinary care',
     },
-    {
-      name: 'Marija Ivanova',
-      rating: 5,
-      text: 'Lieliska klīnika! Ārsti ir ļoti uzmanīgi un profesionāli.',
-      date: '2026-03-05',
+    subtitle: {
+      lv: 'Ar mīlestību un rūpēm',
+      ru: 'С любовью и заботой',
+      en: 'With love and care',
     },
-  ];
+  };
+
+  const why = {
+    title: {
+      lv: 'Kāpēc izvēlēties mūs?',
+      ru: 'Почему выбирают нас?',
+      en: 'Why choose us?',
+    },
+    description: {
+      lv: 'Mēs esam moderna veterinārā klīnika ar vairāk nekā 15 gadu pieredzi. Mūsu komanda ir apņēmusies nodrošināt augstāko aprūpes kvalitāti Jūsu mīļajiem mājdzīvniekiem.',
+      ru: 'Мы современная ветеринарная клиника с более чем 15-летним опытом. Наша команда стремится обеспечить высочайшее качество помощи вашим любимым питомцам.',
+      en: 'We are a modern veterinary clinic with over 15 years of experience. Our team is committed to providing the highest quality care for your beloved pets.',
+    },
+  };
+
+  const contact = {
+    title: {
+      lv: 'Sazinieties ar mums',
+      ru: 'Свяжитесь с нами',
+      en: 'Contact us',
+    },
+    addressLabel: {
+      lv: 'Adrese',
+      ru: 'Адрес',
+      en: 'Address',
+    },
+    phoneLabel: {
+      lv: 'Tālrunis',
+      ru: 'Телефон',
+      en: 'Phone',
+    },
+  };
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-beige via-mint to-beige py-20 lg:py-32">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
+    <div className="abuvet-page pb-20 pt-8 sm:pt-10">
+      <div className="abuvet-container space-y-14">
+        <section className="abuvet-hero overflow-hidden">
+          <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="relative z-10">
+              <div className="mb-5 flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/85">
+                <span className="text-[5rem] leading-none text-white/80 sm:text-[7rem]" style={{ fontFamily: 'var(--font-heading)' }}>ABU</span>
+                <span className="max-w-[12rem] text-purple/75">{hero.badge[language]}</span>
+              </div>
               <EditableText
                 page="home"
                 contentKey="hero-title"
-                defaultValue={t('hero.title')}
+                defaultValue={hero.title[language]}
                 as="h1"
-                className="text-purple mb-6 leading-tight"
-                style={{ fontFamily: 'var(--font-heading)', fontSize: '3.5rem' }}
+                className="mb-4 max-w-xl text-white"
+                style={{ fontFamily: 'var(--font-heading)' }}
                 isAdmin={isEditMode && user?.isAdmin}
                 multiline={false}
               />
               <EditableText
                 page="home"
                 contentKey="hero-subtitle"
-                defaultValue={t('hero.subtitle')}
+                defaultValue={hero.subtitle[language]}
                 as="p"
-                className="text-xl text-purple/80 mb-8 font-semibold"
+                className="mb-8 max-w-md text-2xl font-medium text-white/90"
                 isAdmin={isEditMode && user?.isAdmin}
                 multiline={true}
               />
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3">
                 <Link
                   to="/booking"
-                  className="px-8 py-4 bg-green text-white rounded-lg hover:bg-purple transition-colors font-semibold text-lg inline-flex items-center gap-2"
+                  className="abuvet-button bg-purple hover:bg-green"
                 >
                   {t('hero.cta')}
                   <ArrowRight className="w-5 h-5" />
                 </Link>
-                <Link
-                  to="/contact"
-                  className="px-8 py-4 bg-white text-purple border-2 border-green rounded-lg hover:bg-mint transition-colors font-semibold text-lg"
-                >
-                  {t('contact.title')}
-                </Link>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative min-h-[320px] sm:min-h-[420px]">
+              <div className="pointer-events-none absolute inset-x-0 top-0 text-center text-[9rem] leading-none text-white/35 sm:text-[12rem]" style={{ fontFamily: 'var(--font-heading)' }}>ABU</div>
               <SmartImage
                 page="home"
                 contentKey="hero-image"
-                src="https://images.unsplash.com/photo-1621371236495-1520d8dc72a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXQlMjB2ZXRlcmluYXJ5JTIwY2xpbmljfGVufDF8fHx8MTc3Mzk5Nzk0Mnww&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Happy cat with veterinarian"
-                className="rounded-2xl shadow-2xl w-full h-[400px] lg:h-[500px] object-cover border-4 border-green"
+                src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80"
+                alt="French bulldog"
+                className="absolute bottom-0 right-0 h-full w-full object-contain"
                 adminOnly
               />
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-beige">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <section className="grid grid-cols-2 gap-x-8 gap-y-10 py-2 lg:grid-cols-4">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
+              <div key={index}>
                 <EditableText
                   page="home"
                   contentKey={`stat-value-${index}`}
                   defaultValue={stat.value}
                   as="div"
-                  className="text-5xl font-bold text-green mb-2"
+                  className="mb-1 text-6xl font-bold text-purple"
                   style={{ fontFamily: 'var(--font-heading)' }}
                   isAdmin={isEditMode && user?.isAdmin}
                   multiline={false}
@@ -155,27 +268,75 @@ export function Home() {
                 <EditableText
                   page="home"
                   contentKey={`stat-label-${index}`}
-                  defaultValue={stat.label}
+                  defaultValue={stat.label[language]}
                   as="div"
-                  className="text-purple text-lg font-semibold"
+                  className="max-w-[11rem] text-2xl font-medium leading-tight text-purple/85"
                   isAdmin={isEditMode && user?.isAdmin}
                   multiline={false}
                 />
               </div>
             ))}
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Why Choose Us Section */}
-      <section className="py-20 bg-mint">
-        <div className="container mx-auto px-4">
+        <section className="grid gap-4 lg:grid-cols-[1fr_0.9fr]">
+          <Link
+            to="/services?type=surgery"
+            className={`group relative min-h-[360px] overflow-hidden rounded-[28px] border border-purple/15 ${services[0].tint}`}
+          >
+            <SmartImage
+              page="home"
+              contentKey="service-image-0"
+              src={services[0].image}
+                alt={services[0].title[language]}
+              className="absolute bottom-0 right-0 h-[88%] w-[76%] object-cover mix-blend-multiply"
+            />
+            <div className="relative z-10 flex h-full flex-col justify-between p-6 text-white">
+              <div>
+                <h3 className="mb-2 text-white">{services[0].title[language]}</h3>
+                <p className="max-w-[12rem] text-sm font-medium text-white/85">{services[0].description[language]}</p>
+              </div>
+              <div className="flex justify-end">
+                <span className="abuvet-pill border-white/30 bg-beige/10 text-white">&#8594;</span>
+              </div>
+            </div>
+          </Link>
+
+          <div className="grid gap-4">
+            {services.slice(1).map((service, idx) => (
+              <Link
+                key={service.key}
+                to={`/services?type=${service.key}`}
+                className="group relative min-h-[172px] overflow-hidden rounded-[28px] border border-purple/15 bg-beige"
+              >
+                <SmartImage
+                  page="home"
+                  contentKey={`service-image-${idx + 1}`}
+                  src={service.image}
+                  alt={service.title[language]}
+                  className="absolute inset-0 h-full w-full object-cover grayscale"
+                />
+                <div className="absolute inset-0 bg-black/28" />
+                <div className="relative z-10 flex h-full flex-col justify-between p-5 text-white">
+                  <div className="text-right">
+                    <h3 className="mb-1 text-right text-white">{service.title[language]}</h3>
+                    <p className="ml-auto max-w-[15rem] text-right text-sm font-medium text-white/88">{service.description[language]}</p>
+                  </div>
+                  <div className="flex justify-end">
+                    <span className="abuvet-pill border-white/30 bg-beige/10 text-white">&#8594;</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="space-y-6 py-4">
           <EditableText
             page="home"
             contentKey="why-title"
-            defaultValue={t('why.title')}
+            defaultValue={why.title[language]}
             as="h2"
-            className="text-purple text-center mb-4"
+            className="abuvet-section-title"
             style={{ fontFamily: 'var(--font-heading)' }}
             isAdmin={isEditMode && user?.isAdmin}
             multiline={false}
@@ -183,187 +344,77 @@ export function Home() {
           <EditableText
             page="home"
             contentKey="why-description"
-            defaultValue={t('about.description')}
+            defaultValue={why.description[language]}
             as="p"
-            className="text-xl text-purple/80 text-center mb-12 max-w-2xl mx-auto font-medium"
+            className="abuvet-section-copy max-w-3xl"
             isAdmin={isEditMode && user?.isAdmin}
             multiline={true}
           />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              const isGreen = feature.color === 'green';
-              return (
-                <div
-                  key={index}
-                  className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow border-2 border-green/20"
-                >
-                  <div
-                    className={`w-16 h-16 ${isGreen ? 'bg-green' : 'bg-purple'} rounded-lg flex items-center justify-center mb-4`}
-                  >
-                    <Icon className="w-8 h-8 text-white" />
-                  </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {features.map((feature, index) => (
+              <div key={index} className={feature.solid ? 'abuvet-card-solid' : 'abuvet-card-outline'}>
                   <EditableText
                     page="home"
                     contentKey={`feature-title-${index}`}
-                    defaultValue={feature.title}
+                    defaultValue={feature.title[language]}
                     as="h3"
-                    className="text-xl font-bold mb-3 text-purple"
+                    className={`mb-3 ${feature.solid ? 'text-white' : 'text-purple'}`}
                     isAdmin={isEditMode && user?.isAdmin}
                     multiline={false}
                   />
                   <EditableText
                     page="home"
                     contentKey={`feature-desc-${index}`}
-                    defaultValue={feature.description}
+                    defaultValue={feature.description[language]}
                     as="p"
-                    className="text-purple/70 font-medium"
+                    className={`text-sm font-medium ${feature.solid ? 'text-white/82' : 'text-purple/70'}`}
                     isAdmin={isEditMode && user?.isAdmin}
                     multiline={true}
                   />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Preview */}
-      <section className="py-20 bg-beige">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <EditableText
-              page="home"
-              contentKey="services-title"
-              defaultValue={t('services.title')}
-              as="h2"
-              className="text-purple mb-4"
-              style={{ fontFamily: 'var(--font-heading)' }}
-              isAdmin={isEditMode && user?.isAdmin}
-              multiline={false}
-            />
-            <Link
-              to="/services"
-              className="text-green hover:text-purple font-semibold inline-flex items-center gap-2"
-            >
-              View all services
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {services.map((service, idx) => (
-              <Link
-                key={service.key}
-                to={`/services?type=${service.key}`}
-                className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow border-4 border-green"
-              >
-                <div className="relative h-64">
-                  <SmartImage
-                    page="home"
-                    contentKey={`service-image-${idx}`}
-                    src={service.image}
-                    alt={t(`services.${service.key}`)}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-purple/90 to-transparent" />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white pointer-events-none">
-                  <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-heading)' }}>{t(`services.${service.key}`)}</h3>
-                  <p className="text-sm opacity-90 font-medium">{t(`services.${service.key}.desc`)}</p>
-                </div>
-              </Link>
+              </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Reviews Section */}
-      <section className="py-20 bg-mint">
-        <div className="container mx-auto px-4">
+        <section className="abuvet-soft-surface p-8 sm:p-10">
           <EditableText
             page="home"
-            contentKey="reviews-title"
-            defaultValue={t('reviews.title')}
+            contentKey="cta-title"
+            defaultValue={contact.title[language]}
             as="h2"
-            className="text-purple text-center mb-12"
+            className="mb-6 text-center text-white sm:text-left"
             style={{ fontFamily: 'var(--font-heading)' }}
             isAdmin={isEditMode && user?.isAdmin}
             multiline={false}
           />
-          <div className="grid md:grid-cols-3 gap-8">
-            {reviews.map((review, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm border-2 border-purple/20">
-                <div className="flex gap-1 mb-4">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-green text-green" />
-                  ))}
-                </div>
-                <EditableText
-                  page="home"
-                  contentKey={`review-text-${index}`}
-                  defaultValue={review.text}
-                  as="p"
-                  className="text-purple/80 mb-4 font-medium"
-                  isAdmin={isEditMode && user?.isAdmin}
-                  multiline={true}
-                />
-                <div className="flex items-center justify-between text-sm">
-                  <EditableText
-                    page="home"
-                    contentKey={`review-name-${index}`}
-                    defaultValue={review.name}
-                    as="span"
-                    className="font-bold text-purple"
-                    isAdmin={isEditMode && user?.isAdmin}
-                    multiline={false}
-                  />
-                  <EditableText
-                    page="home"
-                    contentKey={`review-date-${index}`}
-                    defaultValue={review.date}
-                    as="span"
-                    className="text-purple/60"
-                    isAdmin={isEditMode && user?.isAdmin}
-                    multiline={false}
-                  />
+          <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div className="space-y-4 text-white/90">
+              <div className="flex items-start gap-3">
+                <MapPin className="mt-1 h-5 w-5 flex-shrink-0 text-white" />
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/70">{contact.addressLabel[language]}</p>
+                  <p className="text-base font-medium">Vestienas iela 2J, Rīga, LV-1035</p>
                 </div>
               </div>
-            ))}
+              <div className="flex items-start gap-3">
+                <Phone className="mt-1 h-5 w-5 flex-shrink-0 text-white" />
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/70">{contact.phoneLabel[language]}</p>
+                  <p className="text-base font-medium">+371 20 123 456</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/contact" className="abuvet-button bg-purple hover:bg-green">
+                {t('contact.title')}
+              </Link>
+              <Link to="/booking" className="abuvet-button-secondary border-white/35 bg-beige/85 text-purple hover:bg-beige">
+                {t('hero.cta')}
+              </Link>
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-green to-purple text-white">
-        <div className="container mx-auto px-4 text-center">
-          <EditableText
-            page="home"
-            contentKey="cta-title"
-            defaultValue="Ready to care for your pet?"
-            as="h2"
-            className="mb-6"
-            style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem' }}
-            isAdmin={isEditMode && user?.isAdmin}
-            multiline={false}
-          />
-          <EditableText
-            page="home"
-            contentKey="cta-description"
-            defaultValue="Book an appointment today and give your pet the professional care they deserve"
-            as="p"
-            className="text-xl mb-8 max-w-2xl mx-auto font-medium"
-            isAdmin={isEditMode && user?.isAdmin}
-            multiline={true}
-          />
-          <Link
-            to="/booking"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-green rounded-lg hover:bg-beige hover:text-purple transition-colors font-bold text-lg border-2 border-white"
-          >
-            {t('hero.cta')}
-            <ArrowRight className="w-5 h-5" />
-          </Link>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 }

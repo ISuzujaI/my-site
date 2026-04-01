@@ -144,8 +144,8 @@ export function ServiceModal({ service, onClose, onSave }: ServiceModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
+      <div className="bg-beige rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-beige border-b px-6 py-4 flex items-center justify-between">
           <h2 className="text-2xl font-bold">
             {service 
               ? (language === 'lv' ? 'Rediģēt pakalpojumu' : language === 'ru' ? 'Редактировать услугу' : 'Edit Service')

@@ -106,12 +106,11 @@ export function Services() {
     selectedType === 'all' ? services : services.filter((s) => s.category === selectedType);
 
   return (
-    <div className="min-h-screen">
-      {/* Hero */}
-      <section className="relative bg-gradient-to-br from-beige via-mint to-beige py-20">
-        <div className="container mx-auto px-4">
+    <div className="abuvet-page py-10">
+      <section className="abuvet-container">
+        <div className="abuvet-soft-surface px-6 py-12 sm:px-10 text-center">
           <h1 className="text-5xl font-bold text-center mb-6 text-purple">{t('services.title')}</h1>
-          <p className="text-xl text-gray-600 text-center max-w-3xl mx-auto">
+          <p className="text-xl text-purple/80 text-center max-w-3xl mx-auto">
             {language === 'lv' &&
               'Mēs piedāvājam pilnu veterināro pakalpojumu klāstu - no ikdienas aprūpes līdz sarežģītām operācijām'}
             {language === 'ru' &&
@@ -122,16 +121,15 @@ export function Services() {
         </div>
       </section>
 
-      {/* Filter Tabs */}
-      <section className="sticky top-20 z-40 bg-white shadow-sm py-4">
-        <div className="container mx-auto px-4">
+      <section className="sticky top-20 z-40 bg-beige/95 backdrop-blur py-4 border-y border-purple/10">
+        <div className="abuvet-container">
           <div className="flex gap-2 overflow-x-auto pb-2">
             <Link
               to="/services"
-              className={`px-6 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
+              className={`px-6 py-2 rounded-full font-medium whitespace-nowrap transition-colors ${
                 selectedType === 'all'
-                  ? 'bg-green text-white'
-                  : 'bg-mint text-gray-700 hover:bg-beige'
+                  ? 'bg-purple text-white'
+                  : 'bg-beige text-purple hover:text-green border border-purple/20'
               }`}
             >
               {language === 'lv' && 'Visi pakalpojumi'}
@@ -142,10 +140,10 @@ export function Services() {
               <Link
                 key={category.id}
                 to={`/services?type=${category.id}`}
-                className={`px-6 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
+                className={`px-6 py-2 rounded-full font-medium whitespace-nowrap transition-colors ${
                   selectedType === category.id
-                    ? 'bg-green text-white'
-                    : 'bg-mint text-gray-700 hover:bg-beige'
+                    ? 'bg-purple text-white'
+                    : 'bg-beige text-purple hover:text-green border border-purple/20'
                 }`}
               >
                 {category.name[language]}
@@ -155,13 +153,12 @@ export function Services() {
         </div>
       </section>
 
-      {/* Services Grid */}
       <section className="py-20 bg-beige">
-        <div className="container mx-auto px-4">
+        <div className="abuvet-container">
           {loading ? (
             <div className="text-center py-20">
               <Loader2 className="w-12 h-12 text-green mx-auto mb-4 animate-spin" />
-              <p className="text-gray-600">
+              <p className="text-purple/75">
                 {language === 'lv' && 'Ielādē pakalpojumus...'}
                 {language === 'ru' && 'Загружаем услуги...'}
                 {language === 'en' && 'Loading services...'}
@@ -169,8 +166,8 @@ export function Services() {
             </div>
           ) : filteredServices.length === 0 ? (
             <div className="text-center py-20">
-              <AlertCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 text-lg">
+              <AlertCircle className="w-16 h-16 text-purple/40 mx-auto mb-4" />
+              <p className="text-purple/75 text-lg">
                 {language === 'lv' && 'Nav pievienotu pakalpojumu'}
                 {language === 'ru' && 'Нет добавленных услуг'}
                 {language === 'en' && 'No services available'}
@@ -183,18 +180,18 @@ export function Services() {
                 return (
                   <div
                     key={service.id}
-                    className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col"
+                    className="abuvet-surface group overflow-hidden transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 flex flex-col"
                   >
                     <div className="relative aspect-square">
                       <ImageWithFallback
                         src={service.image || 'https://images.unsplash.com/photo-1621371236495-1520d8dc72a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXQlMjB2ZXRlcmluYXJ5JTIwY2xpbmljfGVufDF8fHx8MTc3Mzk5Nzk0Mnww&ixlib=rb-4.1.0&q=80&w=1080'}
                         alt={service.name[language]}
-                        className="w-full h-full object-cover"
+                        className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                      <div className="absolute inset-0 bg-black/35 transition-colors duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:bg-black/25" />
                       <div className="absolute bottom-4 left-4 right-4">
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center flex-shrink-0">
+                          <div className="w-12 h-12 bg-beige rounded-xl flex items-center justify-center flex-shrink-0">
                             {Icon && <Icon className="w-6 h-6 text-green" />}
                           </div>
                           <h2 className="text-2xl font-bold text-white line-clamp-2">{service.name[language]}</h2>
@@ -202,24 +199,24 @@ export function Services() {
                       </div>
                     </div>
                     <div className="p-6 flex-1 flex flex-col">
-                      <p className="text-base text-gray-600 mb-4 line-clamp-3 flex-1">{service.description[language]}</p>
+                      <p className="text-base text-purple/75 mb-4 line-clamp-3 flex-1">{service.description[language]}</p>
                       <div className="space-y-2 mb-4">
                         <div className="flex items-center gap-2">
                           <div className="w-1.5 h-1.5 bg-green rounded-full flex-shrink-0" />
-                          <span className="text-gray-700 text-sm">
+                          <span className="text-purple/80 text-sm">
                             <strong className="text-purple">{language === 'lv' ? 'Cena' : language === 'ru' ? 'Цена' : 'Price'}:</strong> {service.price.toFixed(2)} EUR
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
                           <div className="w-1.5 h-1.5 bg-green rounded-full flex-shrink-0" />
-                          <span className="text-gray-700 text-sm">
+                          <span className="text-purple/80 text-sm">
                             <strong className="text-purple">{language === 'lv' ? 'Ilgums' : language === 'ru' ? 'Длительность' : 'Duration'}:</strong> {service.duration} {language === 'lv' ? 'min' : language === 'ru' ? 'мін' : 'min'}
                           </span>
                         </div>
                       </div>
                       <Link
                         to="/booking"
-                        className="inline-block px-6 py-3 bg-green text-white rounded-lg hover:bg-purple transition-colors font-medium text-center"
+                        className="inline-block px-6 py-3 bg-purple text-white rounded-full hover:bg-green transition-all duration-300 ease-out font-medium text-center"
                       >
                         {t('hero.cta')}
                       </Link>

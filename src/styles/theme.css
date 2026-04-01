@@ -1,67 +1,63 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Фирменные цвета Abuvet */
-  --beige: #F0EDE6;
+  --beige: #FFFFFF;
   --green: #8D957E;
   --mint: #DADED2;
   --purple: #7E5565;
-  
-  /* Шрифты */
-  --font-heading: 'Bebas Neue', 'Arial Black', sans-serif;
+
+  --font-heading: 'Aukim', 'Montserrat', sans-serif;
   --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-  
+
   --font-size: 16px;
-  
-  /* Основные цвета темы - используем фирменную палитру */
-  --background: #F0EDE6; /* Бежевый фон */
-  --foreground: #7E5565; /* Фиолетовый текст */
-  
-  --card: #FFFFFF;
+
+  --background: #FFFFFF;
+  --foreground: #7E5565;
+  --card: #F0EDE6;
   --card-foreground: #7E5565;
-  
-  --popover: #FFFFFF;
+
+  --popover: #F0EDE6;
   --popover-foreground: #7E5565;
-  
-  --primary: #8D957E; /* Зеленый */
-  --primary-foreground: #FFFFFF;
-  
-  --secondary: #DADED2; /* Ментол */
+
+  --primary: #8D957E;
+  --primary-foreground: #7E5565;
+
+  --secondary: #DADED2;
   --secondary-foreground: #7E5565;
-  
+
   --muted: #DADED2;
   --muted-foreground: #8D957E;
-  
-  --accent: #7E5565; /* Фиолетовый для акцентов */
-  --accent-foreground: #FFFFFF;
-  
+
+  --accent: #7E5565;
+  --accent-foreground: #7E5565;
+
   --destructive: #d4183d;
-  --destructive-foreground: #ffffff;
-  
-  --border: #8D957E; /* Зеленый для границ */
+  --destructive-foreground: #7E5565;
+
+  --border: #c6bbbf;
   --input: transparent;
-  --input-background: #FFFFFF;
+  --input-background: #F0EDE6;
   --switch-background: #8D957E;
-  
+
   --font-weight-bold: 800;
   --font-weight-semibold: 600;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  
+
   --ring: #8D957E;
-  
+
   --chart-1: #8D957E;
   --chart-2: #7E5565;
   --chart-3: #DADED2;
   --chart-4: #F0EDE6;
-  --chart-5: #A8B39E;
-  
-  --radius: 0.75rem;
-  
+  --chart-5: #8D957E;
+
+  --radius: 1.5rem;
+
   --sidebar: #DADED2;
   --sidebar-foreground: #7E5565;
   --sidebar-primary: #8D957E;
-  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-primary-foreground: #F0EDE6;
   --sidebar-accent: #F0EDE6;
   --sidebar-accent-foreground: #7E5565;
   --sidebar-border: #8D957E;
@@ -76,7 +72,7 @@
   --popover: #333333;
   --popover-foreground: #F0EDE6;
   --primary: #8D957E;
-  --primary-foreground: #FFFFFF;
+  --primary-foreground: #F0EDE6;
   --secondary: #7E5565;
   --secondary-foreground: #F0EDE6;
   --muted: #3a3a3a;
@@ -84,14 +80,14 @@
   --accent: #7E5565;
   --accent-foreground: #F0EDE6;
   --destructive: #d4183d;
-  --destructive-foreground: #ffffff;
+  --destructive-foreground: #7E5565;
   --border: #8D957E;
   --input: #3a3a3a;
   --ring: #8D957E;
   --sidebar: #2a2a2a;
   --sidebar-foreground: #F0EDE6;
   --sidebar-primary: #8D957E;
-  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-primary-foreground: #7E5565;
   --sidebar-accent: #3a3a3a;
   --sidebar-accent-foreground: #F0EDE6;
   --sidebar-border: #8D957E;
@@ -143,6 +139,48 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@keyframes abuvet-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes abuvet-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes abuvet-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes abuvet-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -151,40 +189,39 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    min-height: 100vh;
   }
-
-  /**
-  * Default typography styles for HTML elements (h1-h4, p, label, button, input).
-  * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
-  */
 
   html {
     font-size: var(--font-size);
+    scroll-behavior: smooth;
   }
 
   h1 {
     font-family: var(--font-heading);
-    font-size: 2.5rem;
+    font-size: clamp(2.75rem, 6vw, 5rem);
     font-weight: var(--font-weight-bold);
-    line-height: 1.2;
-    letter-spacing: 0.02em;
+    line-height: 0.98;
+    letter-spacing: 0.01em;
     text-transform: uppercase;
   }
 
   h2 {
     font-family: var(--font-heading);
-    font-size: 2rem;
+    font-size: clamp(2.2rem, 5vw, 4rem);
     font-weight: var(--font-weight-bold);
-    line-height: 1.3;
-    letter-spacing: 0.02em;
+    line-height: 1;
+    letter-spacing: 0.01em;
     text-transform: uppercase;
   }
 
   h3 {
-    font-family: var(--font-body);
-    font-size: 1.5rem;
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
     font-weight: var(--font-weight-bold);
-    line-height: 1.4;
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
   }
 
   h4 {
@@ -197,6 +234,7 @@
   p {
     font-family: var(--font-body);
     font-weight: var(--font-weight-normal);
+    line-height: 1.45;
   }
 
   label {
@@ -218,5 +256,107 @@
     font-size: 1rem;
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
+  }
+}
+
+@layer components {
+  .abuvet-container {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .abuvet-surface {
+    @apply rounded-[28px] border border-purple/20 bg-beige shadow-[0_18px_50px_rgba(126,85,101,0.08)];
+    transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease;
+    will-change: transform;
+  }
+
+  .abuvet-surface:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 56px rgba(126, 85, 101, 0.14);
+    border-color: rgba(126, 85, 101, 0.35);
+  }
+
+  .abuvet-soft-surface {
+    @apply rounded-[28px] border border-purple/15 bg-mint/35;
+  }
+
+  .abuvet-pill {
+    @apply inline-flex items-center rounded-full border border-purple/35 px-4 py-2 text-sm font-semibold text-purple transition-colors;
+  }
+
+  .abuvet-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-purple px-6 py-3 font-semibold text-white transition-colors hover:bg-green;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease;
+  }
+
+  .abuvet-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(126, 85, 101, 0.18);
+  }
+
+  .abuvet-button-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-purple/30 bg-beige px-6 py-3 font-semibold text-purple transition-colors hover:border-green hover:text-green;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+  }
+
+  .abuvet-button-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(126, 85, 101, 0.14);
+  }
+
+  .abuvet-page {
+    @apply min-h-screen bg-background;
+    animation: abuvet-fade-in 0.45s ease-out both;
+  }
+
+  .abuvet-hero {
+    @apply rounded-[32px] border border-purple/15 bg-mint p-5 shadow-[0_18px_50px_rgba(141,149,126,0.18)] sm:p-8;
+  }
+
+  .abuvet-section-title {
+    @apply text-purple;
+  }
+
+  .abuvet-section-copy {
+    @apply text-lg font-medium text-purple/80 sm:text-xl;
+  }
+
+  .abuvet-card-outline {
+    @apply rounded-[24px] border-2 border-purple/45 bg-beige p-6 text-purple;
+  }
+
+  .abuvet-card-solid {
+    @apply rounded-[24px] border-2 border-purple/30 bg-purple p-6 text-white;
+  }
+
+  .abuvet-header {
+    animation: abuvet-slide-down 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .abuvet-footer {
+    animation: abuvet-fade-up 0.6s ease both;
+  }
+
+  .abuvet-main > * {
+    animation: abuvet-fade-up 0.62s ease both;
+  }
+
+  .abuvet-main > * .abuvet-container > * {
+    opacity: 0;
+    animation: abuvet-pop-in 0.55s ease forwards;
+  }
+
+  .abuvet-main > * .abuvet-container > *:nth-child(1) { animation-delay: 0.05s; }
+  .abuvet-main > * .abuvet-container > *:nth-child(2) { animation-delay: 0.11s; }
+  .abuvet-main > * .abuvet-container > *:nth-child(3) { animation-delay: 0.17s; }
+  .abuvet-main > * .abuvet-container > *:nth-child(4) { animation-delay: 0.23s; }
+  .abuvet-main > * .abuvet-container > *:nth-child(5) { animation-delay: 0.29s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
   }
 }

@@ -207,14 +207,14 @@ export function Booking() {
 
   if (bookingComplete) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="abuvet-page flex items-center justify-center">
         <div className="max-w-md w-full mx-4">
-          <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CheckCircle className="w-12 h-12 text-green-600" />
+          <div className="abuvet-surface p-8 text-center">
+            <div className="w-20 h-20 bg-mint rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="w-12 h-12 text-green" />
             </div>
-            <h2 className="text-3xl font-bold mb-4">{t('booking.success')}</h2>
-            <p className="text-gray-600 mb-6">
+            <h2 className="text-3xl text-purple mb-4">{t('booking.success')}</h2>
+            <p className="text-purple/75 mb-6">
               {language === 'lv' &&
                 'Jūsu pieraksts ir veiksmīgi saglabāts. Apstiprinājumu saņemsiet e-pastā.'}
               {language === 'ru' &&
@@ -222,31 +222,31 @@ export function Booking() {
               {language === 'en' &&
                 'Your booking has been successfully saved. You will receive confirmation by email.'}
             </p>
-            <div className="bg-blue-50 rounded-lg p-4 mb-6 text-left">
+            <div className="bg-mint/40 rounded-2xl p-4 mb-6 text-left">
               <div className="flex justify-between mb-2">
-                <span className="text-gray-600">{t('booking.selectService')}:</span>
+                <span className="text-purple/70">{t('booking.selectService')}:</span>
                 <span className="font-semibold">
                   {services.find((s) => s.id === selectedService)?.name}
                 </span>
               </div>
               <div className="flex justify-between mb-2">
-                <span className="text-gray-600">{t('booking.selectDoctor')}:</span>
+                <span className="text-purple/70">{t('booking.selectDoctor')}:</span>
                 <span className="font-semibold">
                   {doctors.find((d) => d.id === selectedDoctor)?.name}
                 </span>
               </div>
               <div className="flex justify-between mb-2">
-                <span className="text-gray-600">{t('booking.selectDate')}:</span>
+                <span className="text-purple/70">{t('booking.selectDate')}:</span>
                 <span className="font-semibold">{selectedDate}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">{t('booking.selectTime')}:</span>
+                <span className="text-purple/70">{t('booking.selectTime')}:</span>
                 <span className="font-semibold">{selectedTime}</span>
               </div>
             </div>
             <button
               onClick={() => (window.location.href = '/profile')}
-              className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              className="w-full px-6 py-3 bg-purple text-white rounded-full hover:bg-green transition-colors font-medium"
             >
               {t('nav.profile')}
             </button>
@@ -257,13 +257,12 @@ export function Booking() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4">
+    <div className="abuvet-page py-12">
+      <div className="abuvet-container px-4">
         <div className="max-w-4xl mx-auto">
-          {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">{t('booking.title')}</h1>
-            <p className="text-xl text-gray-600">
+            <h1 className="text-4xl text-purple mb-4">{t('booking.title')}</h1>
+            <p className="text-xl text-purple/75">
               {language === 'lv' && 'Sekojiet soļiem, lai rezervētu vizīti'}
               {language === 'ru' && 'Следуйте шагам, чтобы забронировать визит'}
               {language === 'en' && 'Follow the steps to book your visit'}
@@ -278,8 +277,8 @@ export function Booking() {
                   <div
                     className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-colors ${
                       stepNum <= step
-                        ? 'bg-green text-white'
-                        : 'bg-gray-200 text-gray-400'
+                        ? 'bg-purple text-white'
+                        : 'bg-beige border border-purple/20 text-purple/35'
                     }`}
                   >
                     {stepNum}
@@ -287,7 +286,7 @@ export function Booking() {
                   {stepNum < 4 && (
                     <div
                       className={`w-16 lg:w-24 h-1 mx-2 transition-colors ${
-                        stepNum < step ? 'bg-green' : 'bg-gray-200'
+                        stepNum < step ? 'bg-purple' : 'bg-purple/15'
                       }`}
                     />
                   )}
@@ -296,12 +295,10 @@ export function Booking() {
             </div>
           </div>
 
-          {/* Booking Form */}
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            {/* Step 1: Select Service */}
+          <div className="abuvet-surface p-8">
             {step === 1 && (
               <div>
-                <h2 className="text-2xl font-bold mb-6">{t('booking.selectService')}</h2>
+                <h2 className="text-2xl text-purple mb-6">{t('booking.selectService')}</h2>
                 <div className="grid md:grid-cols-2 gap-4">
                   {services.map((service) => (
                     <button
@@ -309,30 +306,29 @@ export function Booking() {
                       onClick={() => setSelectedService(service.id)}
                       className={`p-6 rounded-lg border-2 text-left transition-all ${
                         selectedService === service.id
-                          ? 'border-blue-600 bg-blue-50'
-                          : 'border-gray-200 hover:border-blue-300'
+                          ? 'border-purple bg-mint/40'
+                          : 'border-purple/15 hover:border-green/60'
                       }`}
                     >
-                      <h3 className="text-lg font-semibold mb-2">{service.name}</h3>
-                      <p className="text-sm text-gray-600">{t(`services.${service.id}.desc`)}</p>
+                      <h3 className="text-lg font-semibold mb-2 text-purple">{service.name}</h3>
+                      <p className="text-sm text-purple/75">{t(`services.${service.id}.desc`)}</p>
                     </button>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Step 2: Select Doctor */}
             {step === 2 && (
               <div>
-                <h2 className="text-2xl font-bold mb-6">{t('booking.selectDoctor')}</h2>
+                <h2 className="text-2xl text-purple mb-6">{t('booking.selectDoctor')}</h2>
                 {loadingDoctors ? (
                   <div className="text-center py-12">
                     <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green"></div>
-                    <p className="mt-4 text-gray-600">{t('common.loading')}</p>
+                    <p className="mt-4 text-purple/75">{t('common.loading')}</p>
                   </div>
                 ) : doctors.length === 0 ? (
                   <div className="text-center py-12 bg-beige rounded-lg">
-                    <p className="text-gray-600">
+                    <p className="text-purple/75">
                       {language === 'lv' && 'Nav pieejamu ārstu. Lūdzu, sazinieties ar mums.'}
                       {language === 'ru' && 'Нет доступных врачей. Пожалуйста, свяжитесь с нами.'}
                       {language === 'en' && 'No doctors available. Please contact us.'}
@@ -347,7 +343,7 @@ export function Booking() {
                         className={`w-full p-6 rounded-lg border-2 text-left transition-all flex items-center gap-4 ${
                           selectedDoctor === doctor.id
                             ? 'border-green bg-mint/30'
-                            : 'border-gray-200 hover:border-green/50'
+                            : 'border-purple/15 hover:border-green/50'
                         }`}
                       >
                         {doctor.image ? (
@@ -363,9 +359,9 @@ export function Booking() {
                         )}
                         <div className="flex-1">
                           <h3 className="text-lg font-semibold text-purple">{doctor.name}</h3>
-                          <p className="text-sm text-gray-600">{doctor.specialty[language]}</p>
+                          <p className="text-sm text-purple/75">{doctor.specialty[language]}</p>
                           {doctor.experience && (
-                            <p className="text-xs text-gray-500 mt-1">
+                            <p className="text-xs text-purple/65 mt-1">
                               {doctor.experience} {t('doctors.experience')}
                             </p>
                           )}
@@ -377,10 +373,9 @@ export function Booking() {
               </div>
             )}
 
-            {/* Step 3: Select Date */}
             {step === 3 && (
               <div>
-                <h2 className="text-2xl font-bold mb-6">{t('booking.selectDate')}</h2>
+                <h2 className="text-2xl text-purple mb-6">{t('booking.selectDate')}</h2>
                 <div className="grid md:grid-cols-2 gap-3">
                   {availableDates.map((date) => (
                     <button
@@ -388,12 +383,12 @@ export function Booking() {
                       onClick={() => setSelectedDate(date.value)}
                       className={`p-4 rounded-lg border-2 text-left transition-all ${
                         selectedDate === date.value
-                          ? 'border-blue-600 bg-blue-50'
-                          : 'border-gray-200 hover:border-blue-300'
+                          ? 'border-purple bg-mint/40'
+                          : 'border-purple/15 hover:border-green/50'
                       }`}
                     >
                       <div className="flex items-center gap-2">
-                        <CalendarIcon className="w-5 h-5 text-gray-600" />
+                        <CalendarIcon className="w-5 h-5 text-purple/70" />
                         <span className="font-medium">{date.label}</span>
                       </div>
                     </button>
@@ -402,10 +397,9 @@ export function Booking() {
               </div>
             )}
 
-            {/* Step 4: Select Time */}
             {step === 4 && (
               <div>
-                <h2 className="text-2xl font-bold mb-6">{t('booking.selectTime')}</h2>
+                <h2 className="text-2xl text-purple mb-6">{t('booking.selectTime')}</h2>
                 <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
                   {timeSlots.map((slot) => (
                     <button
@@ -414,10 +408,10 @@ export function Booking() {
                       disabled={!slot.available}
                       className={`p-4 rounded-lg border-2 transition-all ${
                         selectedTime === slot.time
-                          ? 'border-blue-600 bg-blue-50'
+                          ? 'border-purple bg-mint/40'
                           : slot.available
-                          ? 'border-gray-200 hover:border-blue-300'
-                          : 'border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed'
+                          ? 'border-purple/15 hover:border-green/50'
+                          : 'border-purple/10 bg-beige/70 text-purple/35 cursor-not-allowed'
                       }`}
                     >
                       <div className="flex items-center justify-center gap-1">
@@ -430,12 +424,11 @@ export function Booking() {
               </div>
             )}
 
-            {/* Navigation Buttons */}
             <div className="flex gap-4 mt-8">
               {step > 1 && (
                 <button
                   onClick={() => setStep(step - 1)}
-                  className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+                  className="flex-1 px-6 py-3 bg-beige border border-purple/20 text-purple rounded-full hover:border-green hover:text-green transition-colors font-medium"
                 >
                   {language === 'lv' && 'Atpakaļ'}
                   {language === 'ru' && 'Назад'}
@@ -446,10 +439,10 @@ export function Booking() {
                 <button
                   onClick={() => setStep(step + 1)}
                   disabled={!canProceed(step)}
-                  className={`flex-1 px-6 py-3 rounded-lg font-medium transition-colors ${
+                  className={`flex-1 px-6 py-3 rounded-full font-medium transition-colors ${
                     canProceed(step)
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      ? 'bg-purple text-white hover:bg-green'
+                      : 'bg-beige border border-purple/15 text-purple/35 cursor-not-allowed'
                   }`}
                 >
                   {language === 'lv' && 'Turpināt'}
@@ -460,10 +453,10 @@ export function Booking() {
                 <button
                   onClick={handleConfirmBooking}
                   disabled={!canProceed(step)}
-                  className={`flex-1 px-6 py-3 rounded-lg font-medium transition-colors ${
+                  className={`flex-1 px-6 py-3 rounded-full font-medium transition-colors ${
                     canProceed(step)
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      ? 'bg-purple text-white hover:bg-green'
+                      : 'bg-beige border border-purple/15 text-purple/35 cursor-not-allowed'
                   }`}
                 >
                   {t('booking.confirm')}

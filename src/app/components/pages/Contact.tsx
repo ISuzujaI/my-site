@@ -24,10 +24,9 @@ export function Contact() {
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Hero */}
-      <section className="relative bg-gradient-to-br from-beige via-mint to-beige py-20">
-        <div className="container mx-auto px-4">
+    <div className="abuvet-page py-10">
+      <section className="abuvet-container">
+        <div className="abuvet-soft-surface px-6 py-12 sm:px-10 text-center">
           <h1 className="text-purple text-center mb-6" style={{ fontFamily: 'var(--font-heading)' }}>{t('contact.title')}</h1>
           <p className="text-xl text-purple/80 text-center max-w-3xl mx-auto font-semibold">
             {language === 'lv' &&
@@ -40,11 +39,9 @@ export function Contact() {
         </div>
       </section>
 
-      {/* Contact Info & Form */}
       <section className="py-20 bg-beige">
-        <div className="container mx-auto px-4">
+        <div className="abuvet-container">
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Contact Information */}
             <div>
               <h2 className="text-3xl font-bold mb-8 text-purple" style={{ fontFamily: 'var(--font-heading)' }}>
                 {language === 'lv' && 'Kontaktinformācija'}
@@ -137,8 +134,7 @@ export function Contact() {
               </div>
             </div>
 
-            {/* Contact Form */}
-            <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-green/20">
+            <div className="abuvet-surface p-8 border-2 border-green/20">
               <h2 className="text-3xl font-bold mb-6 text-purple" style={{ fontFamily: 'var(--font-heading)' }}>{t('contact.form')}</h2>
 
               {submitted ? (
@@ -224,9 +220,8 @@ export function Contact() {
         </div>
       </section>
 
-      {/* Map */}
       <section className="py-20 bg-mint">
-        <div className="container mx-auto px-4">
+        <div className="abuvet-container">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-8 text-purple" style={{ fontFamily: 'var(--font-heading)' }}>
               {language === 'lv' && 'Kā mūs atrast'}

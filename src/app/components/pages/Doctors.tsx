@@ -69,14 +69,13 @@ export function Doctors() {
   const defaultDoctorImage = 'https://images.unsplash.com/photo-1753487050317-919a2b26a6ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmZW1hbGUlMjB2ZXRlcmluYXJpYW4lMjBwcm9mZXNzaW9uYWx8ZW58MXx8fHwxNzczOTgzNDUyfDA&ixlib=rb-4.1.0&q=80&w=1080';
 
   return (
-    <div className="min-h-screen">
-      {/* Hero */}
-      <section className="relative bg-gradient-to-br from-beige to-mint py-20">
-        <div className="container mx-auto px-4">
-          <h1 className="text-5xl font-bold text-center mb-6" style={{ fontFamily: 'var(--font-heading)' }}>
+    <div className="abuvet-page py-10">
+      <section className="abuvet-container">
+        <div className="abuvet-soft-surface px-6 py-12 sm:px-10 text-center">
+          <h1 className="text-center mb-6 text-purple" style={{ fontFamily: 'var(--font-heading)' }}>
             {t('doctors.title')}
           </h1>
-          <p className="text-xl text-gray-600 text-center max-w-3xl mx-auto">
+          <p className="text-xl text-purple/80 text-center max-w-3xl mx-auto">
             {language === 'lv' &&
               'Mūsu komandā strādā pieredzējuši un augsti kvalificēti veterinārārsti'}
             {language === 'ru' &&
@@ -87,17 +86,15 @@ export function Doctors() {
         </div>
       </section>
 
-      {/* Doctors Grid */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
+      <section className="abuvet-container py-16">
           {loading ? (
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green"></div>
-              <p className="mt-4 text-gray-600">{t('common.loading')}</p>
+              <p className="mt-4 text-purple/75">{t('common.loading')}</p>
             </div>
           ) : doctors.length === 0 ? (
-            <div className="text-center py-12 bg-beige rounded-2xl">
-              <p className="text-xl text-gray-600">
+            <div className="text-center py-12 abuvet-surface">
+              <p className="text-xl text-purple/75">
                 {language === 'lv' && 'Informācija par ārstiem tiks pievienota drīzumā'}
                 {language === 'ru' && 'Информация о врачах будет добавлена в ближайшее время'}
                 {language === 'en' && 'Doctor information will be added soon'}
@@ -108,15 +105,15 @@ export function Doctors() {
               {doctors.map((doctor) => (
                 <div
                   key={doctor.id}
-                  className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                  className="abuvet-surface group overflow-hidden transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5"
                 >
                   <div className="relative h-80">
                     <ImageWithFallback
                       src={doctor.image || defaultDoctorImage}
                       alt={doctor.name}
-                      className="w-full h-full object-cover"
+                      className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                     />
-                    <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full flex items-center gap-2">
+                    <div className="absolute top-4 right-4 bg-beige/95 px-3 py-1 rounded-full flex items-center gap-2">
                       <Award className="w-4 h-4 text-green" />
                       <span className="text-sm font-semibold">
                         {doctor.experience} {t('doctors.experience')}
@@ -127,11 +124,11 @@ export function Doctors() {
                     <h3 className="text-2xl font-bold mb-2 text-purple">{doctor.name}</h3>
                     <p className="text-green font-medium mb-4">{doctor.specialty[language]}</p>
                     {doctor.description[language] && (
-                      <p className="text-gray-600 mb-4">{doctor.description[language]}</p>
+                      <p className="text-purple/75 mb-4">{doctor.description[language]}</p>
                     )}
                     {doctor.specializations?.[language]?.length > 0 && (
                       <div className="mb-6">
-                        <h4 className="font-semibold text-sm text-gray-700 mb-2">
+                        <h4 className="font-semibold text-sm text-purple/80 mb-2">
                           {language === 'lv' && 'Specializācijas:'}
                           {language === 'ru' && 'Специализации:'}
                           {language === 'en' && 'Specializations:'}
@@ -140,7 +137,7 @@ export function Doctors() {
                           {doctor.specializations[language].map((spec, index) => (
                             <span
                               key={index}
-                              className="px-3 py-1 bg-mint/50 text-green rounded-full text-sm"
+                              className="px-3 py-1 bg-mint/70 text-green rounded-full text-sm"
                             >
                               {spec}
                             </span>
@@ -150,7 +147,7 @@ export function Doctors() {
                     )}
                     <Link
                       to={`/booking?doctor=${doctor.id}`}
-                      className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-green text-white rounded-lg hover:bg-purple transition-colors font-medium"
+                      className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-purple text-white rounded-full hover:bg-green transition-all duration-300 ease-out font-medium"
                     >
                       <Calendar className="w-4 h-4" />
                       {t('doctors.bookWith')} {doctor.name.split(' ')[1] || doctor.name}
@@ -160,7 +157,6 @@ export function Doctors() {
               ))}
             </div>
           )}
-        </div>
       </section>
     </div>
   );

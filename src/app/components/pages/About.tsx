@@ -104,53 +104,46 @@ export function About() {
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Hero */}
-      <section className="relative bg-gradient-to-br from-blue-50 to-green-50 py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl font-bold mb-6">{t('about.title')}</h1>
-            <p className="text-xl text-gray-600">{history[language]}</p>
-          </div>
+    <div className="abuvet-page py-10">
+      <section className="abuvet-container">
+        <div className="abuvet-soft-surface max-w-5xl mx-auto px-6 py-12 text-center sm:px-10">
+          <h1 className="mb-6 text-purple">{t('about.title')}</h1>
+          <p className="text-xl text-purple/80">{history[language]}</p>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">
-            {language === 'lv' && 'Mūsu vērtības'}
-            {language === 'ru' && 'Наши ценности'}
-            {language === 'en' && 'Our Values'}
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => {
-              const Icon = value.icon;
-              return (
-                <div key={index} className="text-center">
-                  <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Icon className="w-10 h-10 text-blue-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{value.title[language]}</h3>
-                  <p className="text-gray-600">{value.description[language]}</p>
+      <section className="abuvet-container py-16">
+        <h2 className="abuvet-section-title text-center mb-12">
+          {language === 'lv' && 'Mūsu vērtības'}
+          {language === 'ru' && 'Наши ценности'}
+          {language === 'en' && 'Our Values'}
+        </h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {values.map((value, index) => {
+            const Icon = value.icon;
+            return (
+              <div key={index} className="abuvet-surface text-center p-6">
+                <div className="w-20 h-20 bg-mint rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon className="w-10 h-10 text-green" />
                 </div>
-              );
-            })}
-          </div>
+                <h3 className="mb-2 text-purple text-2xl">{value.title[language]}</h3>
+                <p className="text-purple/75">{value.description[language]}</p>
+              </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* Equipment */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
+      <section className="abuvet-container pb-16">
+        <div className="abuvet-surface p-8 sm:p-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold mb-6">
+              <h2 className="abuvet-section-title mb-6">
                 {language === 'lv' && 'Moderna aprīkojums'}
                 {language === 'ru' && 'Современное оборудование'}
                 {language === 'en' && 'Modern Equipment'}
               </h2>
-              <p className="text-lg text-gray-600 mb-8">
+              <p className="text-lg text-purple/80 mb-8">
                 {language === 'lv' &&
                   'Mūsu klīnika ir aprīkota ar jaunāko medicīnisko tehnoloģiju, lai nodrošinātu precīzu diagnostiku un efektīvu ārstēšanu.'}
                 {language === 'ru' &&
@@ -161,12 +154,12 @@ export function About() {
               <div className="space-y-4">
                 {equipment.map((item, index) => (
                   <div key={index} className="flex gap-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Award className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 bg-mint rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Award className="w-6 h-6 text-green" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-lg">{item.name[language]}</h4>
-                      <p className="text-gray-600">{item.description[language]}</p>
+                      <h4 className="font-semibold text-lg text-purple">{item.name[language]}</h4>
+                      <p className="text-purple/75">{item.description[language]}</p>
                     </div>
                   </div>
                 ))}
@@ -185,70 +178,64 @@ export function About() {
         </div>
       </section>
 
-      {/* Licenses */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">
-            {language === 'lv' && 'Licences un sertifikāti'}
-            {language === 'ru' && 'Лицензии и сертификаты'}
-            {language === 'en' && 'Licenses and Certificates'}
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {licenses.map((license, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg border-2 border-blue-100">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Award className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">{license.title[language]}</h3>
-                    <p className="text-gray-600 mb-1">
-                      {language === 'lv' && 'Numurs'}{language === 'ru' && 'Номер'}
-                      {language === 'en' && 'Number'}: {license.number}
-                    </p>
-                    <p className="text-gray-600">
-                      {language === 'lv' && 'Izsniegts'}{language === 'ru' && 'Выдано'}
-                      {language === 'en' && 'Issued'}: {license.issued}
-                    </p>
-                  </div>
+      <section className="abuvet-container pb-16">
+        <h2 className="abuvet-section-title text-center mb-12">
+          {language === 'lv' && 'Licences un sertifikāti'}
+          {language === 'ru' && 'Лицензии и сертификаты'}
+          {language === 'en' && 'Licenses and Certificates'}
+        </h2>
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {licenses.map((license, index) => (
+            <div key={index} className="abuvet-surface p-8">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-mint rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Award className="w-6 h-6 text-green" />
+                </div>
+                <div>
+                  <h3 className="text-xl text-purple mb-2">{license.title[language]}</h3>
+                  <p className="text-purple/75 mb-1">
+                    {language === 'lv' && 'Numurs'}{language === 'ru' && 'Номер'}
+                    {language === 'en' && 'Number'}: {license.number}
+                  </p>
+                  <p className="text-purple/75">
+                    {language === 'lv' && 'Izsniegts'}{language === 'ru' && 'Выдано'}
+                    {language === 'en' && 'Issued'}: {license.issued}
+                  </p>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">
-            {language === 'lv' && 'Mūsu klīnika'}
-            {language === 'ru' && 'Наша клиника'}
-            {language === 'en' && 'Our Clinic'}
-          </h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <SmartImage
-              page="about"
-              contentKey="gallery-image-0"
-              src="https://images.unsplash.com/photo-1770836037326-d2df574278b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2ZXRlcmluYXJ5JTIwc3VyZ2VyeSUyMHJvb218ZW58MXx8fHwxNzczOTAwNjIzfDA&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Surgery room"
-              className="rounded-xl shadow-lg w-full h-64 object-cover"
-            />
-            <SmartImage
-              page="about"
-              contentKey="gallery-image-1"
-              src="https://images.unsplash.com/photo-1621371236495-1520d8dc72a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXQlMjB2ZXRlcmluYXJ5JTIwY2xpbmljfGVufDF8fHx8MTc3Mzk5Nzk0Mnww&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Reception area"
-              className="rounded-xl shadow-lg w-full h-64 object-cover"
-            />
-            <SmartImage
-              page="about"
-              contentKey="gallery-image-2"
-              src="https://images.unsplash.com/photo-1682663947127-ac9d59d7f312?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2ZXRlcmluYXJ5JTIwZXF1aXBtZW50JTIwbW9kZXJufGVufDF8fHx8MTc3Mzk5Nzk0Mnww&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Equipment room"
-              className="rounded-xl shadow-lg w-full h-64 object-cover"
-            />
-          </div>
+      <section className="abuvet-container pb-20">
+        <h2 className="abuvet-section-title text-center mb-12">
+          {language === 'lv' && 'Mūsu klīnika'}
+          {language === 'ru' && 'Наша клиника'}
+          {language === 'en' && 'Our Clinic'}
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          <SmartImage
+            page="about"
+            contentKey="gallery-image-0"
+            src="https://images.unsplash.com/photo-1770836037326-d2df574278b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2ZXRlcmluYXJ5JTIwc3VyZ2VyeSUyMHJvb218ZW58MXx8fHwxNzczOTAwNjIzfDA&ixlib=rb-4.1.0&q=80&w=1080"
+            alt="Surgery room"
+            className="rounded-xl shadow-lg w-full h-64 object-cover"
+          />
+          <SmartImage
+            page="about"
+            contentKey="gallery-image-1"
+            src="https://images.unsplash.com/photo-1621371236495-1520d8dc72a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXQlMjB2ZXRlcmluYXJ5JTIwY2xpbmljfGVufDF8fHx8MTc3Mzk5Nzk0Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+            alt="Reception area"
+            className="rounded-xl shadow-lg w-full h-64 object-cover"
+          />
+          <SmartImage
+            page="about"
+            contentKey="gallery-image-2"
+            src="https://images.unsplash.com/photo-1682663947127-ac9d59d7f312?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2ZXRlcmluYXJ5JTIwZXF1aXBtZW50JTIwbW9kZXJufGVufDF8fHx8MTc3Mzk5Nzk0Mnww&ixlib=rb-4.1.0&q=80&w=1080"
+            alt="Equipment room"
+            className="rounded-xl shadow-lg w-full h-64 object-cover"
+          />
         </div>
       </section>
     </div>
