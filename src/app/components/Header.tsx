@@ -1,17 +1,34 @@
 ﻿import { useState } from 'react';
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { Menu, X, User } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import logo from '../../assets/c185aac12eda49255a8fe97956980cbd0adda400.png';
+
+const PHONE_DISPLAY = '+371 20123456';
+const PHONE_LINK = '+37120123456';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const { isAuthenticated, user } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handlePhoneClick = () => {
+    const isMobile =
+      window.matchMedia('(max-width: 1023px)').matches ||
+      /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      window.location.href = `tel:${PHONE_LINK}`;
+      return;
+    }
+
+    navigate('/booking');
+  };
 
   return (
     <header className="abuvet-header sticky top-0 z-50 border-b border-purple/10 bg-beige/95 backdrop-blur">
@@ -75,7 +92,7 @@ export function Header() {
             </Link>
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-4 lg:flex">
             <div className="flex gap-2">
               <button
                 onClick={() => setLanguage('lv')}
@@ -125,14 +142,32 @@ export function Header() {
                 {t('hero.cta')}
               </Link>
             )}
+
+            <button
+              type="button"
+              onClick={handlePhoneClick}
+              className="flex flex-col items-end text-right leading-tight text-purple transition-colors hover:text-green"
+            >
+              <span className="text-base font-semibold">{PHONE_DISPLAY}</span>
+              <span className="text-[10px] opacity-80">ежедневно с 9:00 до 21:00</span>
+            </button>
           </div>
 
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="rounded-full border border-purple/20 bg-beige p-2 text-purple lg:hidden"
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="ml-auto flex items-center gap-2 lg:hidden">
+            <button
+              type="button"
+              onClick={handlePhoneClick}
+              className="text-sm font-semibold text-purple"
+            >
+              {PHONE_DISPLAY}
+            </button>
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="rounded-full border border-purple/20 bg-beige p-2 text-purple"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {isMenuOpen && (

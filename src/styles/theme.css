@@ -310,7 +310,7 @@
   }
 
   .abuvet-hero {
-    @apply rounded-[32px] border border-purple/15 bg-mint p-5 shadow-[0_18px_50px_rgba(141,149,126,0.18)] sm:p-8;
+    @apply rounded-[32px] border border-white/70 bg-[#c9ccc3] p-5 shadow-[0_18px_50px_rgba(116,122,108,0.2)] sm:p-8;
   }
 
   .abuvet-section-title {

@@ -203,18 +203,22 @@ export function Home() {
     <div className="abuvet-page pb-20 pt-8 sm:pt-10">
       <div className="abuvet-container space-y-14">
         <section className="abuvet-hero overflow-hidden">
-          <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="grid items-center gap-7 lg:grid-cols-[1fr_1.05fr] lg:gap-10">
             <div className="relative z-10">
-              <div className="mb-5 flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-white/85">
-                <span className="text-[5rem] leading-none text-white/80 sm:text-[7rem]" style={{ fontFamily: 'var(--font-heading)' }}>ABU</span>
-                <span className="max-w-[12rem] text-purple/75">{hero.badge[language]}</span>
+              <div className="mb-7">
+                <div className="text-[4.5rem] font-semibold leading-none text-white/72 sm:text-[6.2rem]" style={{ fontFamily: 'var(--font-heading)' }}>
+                  ARU+
+                </div>
+                <span className="mt-2 block text-sm font-semibold uppercase tracking-[0.18em] text-white/86">
+                  {hero.badge[language]}
+                </span>
               </div>
               <EditableText
                 page="home"
                 contentKey="hero-title"
                 defaultValue={hero.title[language]}
                 as="h1"
-                className="mb-4 max-w-xl text-white"
+                className="mb-4 max-w-xl text-[2.2rem] uppercase leading-[1.05] text-white sm:text-[2.9rem]"
                 style={{ fontFamily: 'var(--font-heading)' }}
                 isAdmin={isEditMode && user?.isAdmin}
                 multiline={false}
@@ -224,28 +228,29 @@ export function Home() {
                 contentKey="hero-subtitle"
                 defaultValue={hero.subtitle[language]}
                 as="p"
-                className="mb-8 max-w-md text-2xl font-medium text-white/90"
+                className="mb-8 max-w-md text-3xl font-light text-white/90 sm:text-[2.2rem]"
                 isAdmin={isEditMode && user?.isAdmin}
                 multiline={true}
               />
               <div className="flex flex-wrap gap-3">
                 <Link
                   to="/booking"
-                  className="abuvet-button bg-purple hover:bg-green"
+                  className="abuvet-button bg-purple/95 px-8 py-3 text-xl hover:bg-purple"
                 >
                   {t('hero.cta')}
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
             </div>
-            <div className="relative min-h-[320px] sm:min-h-[420px]">
-              <div className="pointer-events-none absolute inset-x-0 top-0 text-center text-[9rem] leading-none text-white/35 sm:text-[12rem]" style={{ fontFamily: 'var(--font-heading)' }}>ABU</div>
+            <div className="relative min-h-[330px] sm:min-h-[450px] lg:min-h-[500px]">
+              <div className="absolute -right-14 top-8 h-[260px] w-[260px] rounded-full bg-white/55 blur-3xl sm:-right-8 sm:h-[360px] sm:w-[360px]" />
+              <div className="absolute bottom-0 right-10 h-[140px] w-[240px] rounded-full bg-black/12 blur-2xl sm:w-[280px]" />
               <SmartImage
                 page="home"
                 contentKey="hero-image"
                 src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80"
                 alt="French bulldog"
-                className="absolute bottom-0 right-0 h-full w-full object-contain"
+                className="absolute bottom-0 right-[-10%] z-10 h-[114%] w-[103%] object-contain drop-shadow-[0_24px_34px_rgba(22,17,20,0.34)] sm:right-[-3%] sm:h-[120%] sm:w-[98%]"
                 adminOnly
               />
             </div>
