@@ -24,16 +24,46 @@ export function EditableText({
   isAdmin = false,
   multiline = false,
 }: EditableTextProps) {
-  const [value, setValue] = useState(defaultValue);
+  const cacheKey = `text_cache_${page}_${contentKey}`;
+
+  const getCachedValue = () => {
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (!cached) return null;
+
+      const cacheData = JSON.parse(cached);
+      if (typeof cacheData?.value === 'string') {
+        return cacheData.value as string;
+      }
+    } catch (cacheError) {
+      console.debug('EditableText cache not available:', cacheError);
+    }
+
+    return null;
+  };
+
+  const initialCachedValue = getCachedValue();
+  const [value, setValue] = useState(initialCachedValue ?? '');
   const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState(defaultValue);
-  const [loading, setLoading] = useState(true);
+  const [editValue, setEditValue] = useState(initialCachedValue ?? '');
+  const [loading, setLoading] = useState(!initialCachedValue);
   const { refreshContent, contentVersion } = useContent();
 
   const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-de695671`;
 
   // Load content on mount and when contentVersion changes
   useEffect(() => {
+    const cachedValue = getCachedValue();
+    if (cachedValue !== null) {
+      setValue(cachedValue);
+      setEditValue(cachedValue);
+      setLoading(false);
+    } else {
+      setValue('');
+      setEditValue('');
+      setLoading(true);
+    }
+
     loadContent();
   }, [page, contentKey, contentVersion]);
 
@@ -50,6 +80,14 @@ export function EditableText({
         if (result.success && result.data) {
           setValue(result.data.value);
           setEditValue(result.data.value);
+          try {
+            localStorage.setItem(cacheKey, JSON.stringify({
+              value: result.data.value,
+              timestamp: Date.now(),
+            }));
+          } catch (setCacheError) {
+            console.debug('EditableText cache set failed:', setCacheError);
+          }
         } else {
           setValue(defaultValue);
           setEditValue(defaultValue);
@@ -84,6 +122,14 @@ export function EditableText({
       if (response.ok) {
         setValue(editValue);
         setIsEditing(false);
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({
+            value: editValue,
+            timestamp: Date.now(),
+          }));
+        } catch (setCacheError) {
+          console.debug('EditableText cache set failed:', setCacheError);
+        }
         // Trigger global content refresh
         refreshContent();
       } else {
@@ -101,7 +147,7 @@ export function EditableText({
   };
 
   if (loading) {
-    return <Component className={className} style={style}>{defaultValue}</Component>;
+    return <Component className={className} style={style}>&nbsp;</Component>;
   }
 
   if (!isAdmin) {
