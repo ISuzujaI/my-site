@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Edit2, Save, X } from 'lucide-react';
 import { projectId, publicAnonKey } from '/utils/supabase/info';
 import { useContent } from '../context/ContentContext';
+import { useLanguage } from '../context/LanguageContext';
 
 interface EditableTextProps {
   page: string;
@@ -24,12 +25,26 @@ export function EditableText({
   isAdmin = false,
   multiline = false,
 }: EditableTextProps) {
-  const cacheKey = `text_cache_${page}_${contentKey}`;
+  const { language } = useLanguage();
+  const cacheKey = `text_cache_${page}_${contentKey}_${language}`;
+  const legacyCacheKey = `text_cache_${page}_${contentKey}`;
+  const localizedContentKey = `${contentKey}_${language}`;
 
   const getCachedValue = () => {
     try {
       const cached = localStorage.getItem(cacheKey);
-      if (!cached) return null;
+      if (!cached) {
+        // Backward compatibility for old cache keys. Use this only for LV.
+        if (language !== 'lv') return null;
+        const legacyCached = localStorage.getItem(legacyCacheKey);
+        if (!legacyCached) return null;
+
+        const legacyCacheData = JSON.parse(legacyCached);
+        if (typeof legacyCacheData?.value === 'string') {
+          return legacyCacheData.value as string;
+        }
+        return null;
+      }
 
       const cacheData = JSON.parse(cached);
       if (typeof cacheData?.value === 'string') {
@@ -65,11 +80,11 @@ export function EditableText({
     }
 
     loadContent();
-  }, [page, contentKey, contentVersion]);
+  }, [page, contentKey, contentVersion, language]);
 
   const loadContent = async () => {
     try {
-      const response = await fetch(`${API_BASE}/content/${page}/${contentKey}`, {
+      const response = await fetch(`${API_BASE}/content/${page}/${localizedContentKey}`, {
         headers: {
           'Authorization': `Bearer ${publicAnonKey}`,
         },
@@ -89,6 +104,23 @@ export function EditableText({
             console.debug('EditableText cache set failed:', setCacheError);
           }
         } else {
+          // For LV only, try legacy key without language suffix.
+          if (language === 'lv') {
+            const legacyResponse = await fetch(`${API_BASE}/content/${page}/${contentKey}`, {
+              headers: {
+                'Authorization': `Bearer ${publicAnonKey}`,
+              },
+            });
+
+            if (legacyResponse.ok) {
+              const legacyResult = await legacyResponse.json();
+              if (legacyResult.success && legacyResult.data) {
+                setValue(legacyResult.data.value);
+                setEditValue(legacyResult.data.value);
+                return;
+              }
+            }
+          }
           setValue(defaultValue);
           setEditValue(defaultValue);
         }
@@ -107,7 +139,7 @@ export function EditableText({
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`${API_BASE}/content/${page}/${contentKey}`, {
+      const response = await fetch(`${API_BASE}/content/${page}/${localizedContentKey}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${publicAnonKey}`,

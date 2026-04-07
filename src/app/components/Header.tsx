@@ -36,7 +36,6 @@ export function Header() {
         <div className="flex min-h-20 items-center justify-between gap-4 py-3">
           <Link to="/" className="flex items-center gap-3">
             <img src={logo} alt="Abuvet" className="h-10 w-10 object-contain" />
-            <span className="text-3xl leading-none text-purple" style={{ fontFamily: 'var(--font-heading)' }}>ABU</span>
           </Link>
 
           <nav className="hidden items-center gap-6 lg:flex">

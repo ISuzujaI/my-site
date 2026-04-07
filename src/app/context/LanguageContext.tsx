@@ -36,6 +36,22 @@ const translations: Record<Language, Record<string, string>> = {
     'hero.subtitle': 'Profesionāla veterinārā aprūpe ar mīlestību un rūpēm',
     'hero.cta': 'Pierakstīties',
     
+    // Stats
+    'stats.experience': 'Gadu pieredze',
+    'stats.savedLives': 'Izglābtas dzīvības',
+    'stats.operations': 'Veiktas operācijas',
+    'stats.doctors': 'Profesionāli ārsti',
+    
+    // Features
+    'feature.experienced': 'PIEREDZĒJUŠI SPECIĀLISTI',
+    'feature.experienced.desc': 'Profesionāli ārsti un pieredzējuši speciālisti',
+    'feature.emergency': 'NEATLIEKAMĀ PALĪDZĪBA 24/7',
+    'feature.emergency.desc': 'Profesionāli ārsti un pieredzējuši speciālisti',
+    'feature.equipment': 'MODERNS APRĪKOJUMS',
+    'feature.equipment.desc': 'Profesionāli ārsti un pieredzējuši speciālisti',
+    'feature.approach': 'INDIVIDUĀLA PIEEJA',
+    'feature.approach.desc': 'Profesionāli ārsti un pieredzējuši speciālisti',
+    
     // About section
     'about.title': 'Par mūsu klīniku',
     'about.description': 'Mēs esam moderna veterinārā klīnika ar vairāk nekā 15 gadu pieredzi. Mūsu komanda ir apņēmusies nodrošināt augstāko aprūpes kvalitāti jūsu mīļajiem mājdzīvniekiem.',
@@ -45,6 +61,8 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Why choose us
     'why.title': 'Kāpēc izvēlēties mūs?',
+    'why.whyChoose': 'Mēs esam moderna veterinārā klīnika ar vairāk nekā 15 gadu pieredzi.',
+    'why.whyChooseDesc': 'Mūsu komanda ir apņēmusies nodrošināt augstāko aprūpes kvalitāti Jūsu mīļajiem mājdzīvniekiem.',
     'why.modern': 'Moderna aprīkojums',
     'why.modern.desc': 'Jaunākās tehnoloģijas diagnostikai un ārstēšanai',
     'why.experienced': 'Pieredzējuši speciālisti',
@@ -53,6 +71,12 @@ const translations: Record<Language, Record<string, string>> = {
     'why.emergency.desc': 'Vienmēr pieejami, kad jūsu mājdzīvniekam nepieciešama palīdzība',
     'why.care': 'Individuāla pieeja',
     'why.care.desc': 'Personalizēta aprūpe katram pacientam',
+    
+    // Contact
+    'contact.contactTitle': 'SAZINIETIES AR MUMS',
+    'contact.contactAddress': 'Veterinārā iela 23, Rīga, LV-1050',
+    'contact.contactPhone': '+371 20 123 456',
+    'contact.contactEmail': 'info@abuvet.lv',
     
     // Services
     'services.title': 'Mūsu pakalpojumi',
@@ -161,6 +185,22 @@ const translations: Record<Language, Record<string, string>> = {
     'hero.subtitle': 'Профессиональный ветеринарный уход с любовью и заботой',
     'hero.cta': 'Записаться',
     
+    // Stats
+    'stats.experience': 'Лет опыта',
+    'stats.savedLives': 'Спасённых жизней',
+    'stats.operations': 'Проведено операций',
+    'stats.doctors': 'Профессиональных врачей',
+    
+    // Features
+    'feature.experienced': 'ОПЫТНЫЕ СПЕЦИАЛИСТЫ',
+    'feature.experienced.desc': 'Квалифицированные врачи и опытные специалисты',
+    'feature.emergency': 'СКОРАЯ ПОМОЩЬ 24/7',
+    'feature.emergency.desc': 'Квалифицированные врачи и опытные специалисты',
+    'feature.equipment': 'СОВРЕМЕННОЕ ОБОРУДОВАНИЕ',
+    'feature.equipment.desc': 'Квалифицированные врачи и опытные специалисты',
+    'feature.approach': 'ИНДИВИДУАЛЬНЫЙ ПОДХОД',
+    'feature.approach.desc': 'Квалифицированные врачи и опытные специалисты',
+    
     // About section
     'about.title': 'О нашей клинике',
     'about.description': 'Мы - современная ветеринарная клиника с более чем 15-летним опытом. Наша команда стремится обеспечить наивысшее качество ухода за вашими любимыми питомцами.',
@@ -170,6 +210,8 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Why choose us
     'why.title': 'Почему выбирают нас?',
+    'why.whyChoose': 'Мы - современная ветеринарная клиника с более чем 15-летним опытом.',
+    'why.whyChooseDesc': 'Наша команда стремится обеспечить наивысшее качество ухода за вашими любимыми питомцами.',
     'why.modern': 'Современное оборудование',
     'why.modern.desc': 'Новейшие технологии для диагностики и лечения',
     'why.experienced': 'Опытные специалисты',
@@ -178,6 +220,12 @@ const translations: Record<Language, Record<string, string>> = {
     'why.emergency.desc': 'Всегда доступны, когда вашему питомцу нужна помощь',
     'why.care': 'Индивидуальный подход',
     'why.care.desc': 'Персонализированный уход для каждого пациента',
+    
+    // Contact
+    'contact.contactTitle': 'СВЯЖИТЕСЬ С НАМИ',
+    'contact.contactAddress': 'Ветеринарная ул., 23, Рига, LV-1050',
+    'contact.contactPhone': '+371 20 123 456',
+    'contact.contactEmail': 'info@abuvet.lv',
     
     // Services
     'services.title': 'Наши услуги',
@@ -286,6 +334,22 @@ const translations: Record<Language, Record<string, string>> = {
     'hero.subtitle': 'Professional veterinary care with love and attention',
     'hero.cta': 'Book Appointment',
     
+    // Stats
+    'stats.experience': 'Years Experience',
+    'stats.savedLives': 'Lives Saved',
+    'stats.operations': 'Operations Performed',
+    'stats.doctors': 'Professional Doctors',
+    
+    // Features
+    'feature.experienced': 'EXPERIENCED SPECIALISTS',
+    'feature.experienced.desc': 'Qualified doctors and experienced specialists',
+    'feature.emergency': 'EMERGENCY CARE 24/7',
+    'feature.emergency.desc': 'Qualified doctors and experienced specialists',
+    'feature.equipment': 'MODERN EQUIPMENT',
+    'feature.equipment.desc': 'Qualified doctors and experienced specialists',
+    'feature.approach': 'INDIVIDUAL APPROACH',
+    'feature.approach.desc': 'Qualified doctors and experienced specialists',
+    
     // About section
     'about.title': 'About Our Clinic',
     'about.description': 'We are a modern veterinary clinic with over 15 years of experience. Our team is committed to providing the highest quality care for your beloved pets.',
@@ -295,6 +359,8 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Why choose us
     'why.title': 'Why Choose Us?',
+    'why.whyChoose': 'We are a modern veterinary clinic with over 15 years of experience.',
+    'why.whyChooseDesc': 'Our team is committed to providing the highest quality care for your beloved pets.',
     'why.modern': 'Modern Equipment',
     'why.modern.desc': 'Latest technology for diagnostics and treatment',
     'why.experienced': 'Experienced Specialists',
@@ -303,6 +369,12 @@ const translations: Record<Language, Record<string, string>> = {
     'why.emergency.desc': 'Always available when your pet needs help',
     'why.care': 'Individual Approach',
     'why.care.desc': 'Personalized care for each patient',
+    
+    // Contact
+    'contact.contactTitle': 'CONTACT US',
+    'contact.contactAddress': 'Veterinary Street, 23, Riga, LV-1050',
+    'contact.contactPhone': '+371 20 123 456',
+    'contact.contactEmail': 'info@abuvet.lv',
     
     // Services
     'services.title': 'Our Services',
