@@ -76,6 +76,7 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.contactTitle': 'SAZINIETIES AR MUMS',
     'contact.contactAddress': 'Veterinārā iela 23, Rīga, LV-1050',
     'contact.contactPhone': '+371 20 123 456',
+    'contact.phoneSchedule': 'katru dienu no 9:00 līdz 21:00',
     'contact.contactEmail': 'info@abuvet.lv',
     
     // Services
@@ -225,6 +226,7 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.contactTitle': 'СВЯЖИТЕСЬ С НАМИ',
     'contact.contactAddress': 'Ветеринарная ул., 23, Рига, LV-1050',
     'contact.contactPhone': '+371 20 123 456',
+    'contact.phoneSchedule': 'ежедневно с 9:00 до 21:00',
     'contact.contactEmail': 'info@abuvet.lv',
     
     // Services
@@ -374,6 +376,7 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.contactTitle': 'CONTACT US',
     'contact.contactAddress': 'Veterinary Street, 23, Riga, LV-1050',
     'contact.contactPhone': '+371 20 123 456',
+    'contact.phoneSchedule': 'daily from 9:00 to 21:00',
     'contact.contactEmail': 'info@abuvet.lv',
     
     // Services

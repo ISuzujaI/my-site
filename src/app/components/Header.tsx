@@ -148,7 +148,7 @@ export function Header() {
               className="flex flex-col items-end text-right leading-tight text-purple transition-colors hover:text-green"
             >
               <span className="text-base font-semibold">{PHONE_DISPLAY}</span>
-              <span className="text-[10px] opacity-80">ежедневно с 9:00 до 21:00</span>
+              <span className="text-[10px] opacity-80">{t('contact.phoneSchedule')}</span>
             </button>
           </div>
 
