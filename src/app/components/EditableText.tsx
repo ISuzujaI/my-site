@@ -7,6 +7,7 @@ import { useLanguage } from '../context/LanguageContext';
 type PageContentMap = Record<string, string>;
 const pageContentPromiseCache = new Map<string, Promise<PageContentMap>>();
 const pageContentValueCache = new Map<string, PageContentMap>();
+const runtimeTextCache = new Map<string, string>();
 
 async function loadPageContent(apiBase: string, page: string, version: number): Promise<PageContentMap> {
   const cacheId = `${page}:${version}`;
@@ -76,19 +77,29 @@ export function EditableText({
 }: EditableTextProps) {
   const { language } = useLanguage();
   const localizedContentKey = `${contentKey}_${language}`;
-  const [value, setValue] = useState(defaultValue);
+  const runtimeTextKey = `${page}:${localizedContentKey}`;
+  const [value, setValue] = useState(runtimeTextCache.get(runtimeTextKey) ?? '');
   const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState(defaultValue);
+  const [editValue, setEditValue] = useState(runtimeTextCache.get(runtimeTextKey) ?? '');
+  const [loading, setLoading] = useState(!runtimeTextCache.has(runtimeTextKey));
   const { refreshContent, contentVersion } = useContent();
 
   const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-de695671`;
 
   // Load content on mount and when contentVersion changes
   useEffect(() => {
-    setValue(defaultValue);
-    setEditValue(defaultValue);
+    const cachedValue = runtimeTextCache.get(runtimeTextKey);
+    if (typeof cachedValue === 'string') {
+      setValue(cachedValue);
+      setEditValue(cachedValue);
+      setLoading(false);
+    } else {
+      setValue('');
+      setEditValue('');
+      setLoading(true);
+    }
     loadContent();
-  }, [page, contentKey, contentVersion, language, defaultValue]);
+  }, [page, contentKey, contentVersion, language, runtimeTextKey]);
 
   const loadContent = async () => {
     try {
@@ -99,10 +110,11 @@ export function EditableText({
 
       setValue(nextValue);
       setEditValue(nextValue);
+      runtimeTextCache.set(runtimeTextKey, nextValue);
     } catch (err) {
-      console.warn('Error loading content (using default):', err);
-      setValue(defaultValue);
-      setEditValue(defaultValue);
+      console.warn('Error loading content (keeping current value):', err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -128,6 +140,7 @@ export function EditableText({
       if (response.ok) {
         setValue(editValue);
         setIsEditing(false);
+        runtimeTextCache.set(runtimeTextKey, editValue);
         clearPageContentCache();
         refreshContent();
       } else {
@@ -143,6 +156,10 @@ export function EditableText({
     setEditValue(value);
     setIsEditing(false);
   };
+
+  if (loading) {
+    return <Component className={className} style={style}>&nbsp;</Component>;
+  }
 
   if (!isAdmin) {
     return <Component className={className} style={style}>{value || defaultValue}</Component>;
