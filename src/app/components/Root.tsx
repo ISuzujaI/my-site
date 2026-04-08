@@ -1,4 +1,5 @@
-import { Outlet } from 'react-router';
+import { useEffect } from 'react';
+import { Outlet, useLocation } from 'react-router';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { AdminEditToggle } from './AdminEditToggle';
@@ -8,6 +9,11 @@ import { useEditMode } from '../context/EditModeContext';
 export function Root() {
   const { user } = useAuth();
   const { setEditMode } = useEditMode();
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen flex flex-col">

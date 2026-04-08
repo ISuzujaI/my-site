@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import logo from '../../assets/c185aac12eda49255a8fe97956980cbd0adda400.png';
+import logo from '../../assets/ABU - logo - purple.png';
 
 export function Footer() {
   const { t } = useLanguage();
@@ -13,7 +13,6 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <img src={logo} alt="Abuvet" className="w-10 h-10 object-contain" />
-              <span className="text-3xl leading-none text-purple" style={{ fontFamily: 'var(--font-heading)' }}>ABU</span>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-purple/75">
               {t('about.description')}

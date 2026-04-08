@@ -3,6 +3,8 @@ import { Edit2, Upload, X, Loader2 } from 'lucide-react';
 import { projectId, publicAnonKey } from '/utils/supabase/info';
 import { useContent } from '../context/ContentContext';
 
+const runtimeImageCache = new Map<string, string>();
+
 interface EditableImageProps {
   page: string;
   contentKey: string;
@@ -22,14 +24,29 @@ export function EditableImage({
   isAdmin = false,
   adminOnly = false,
 }: EditableImageProps) {
-  const [imageSrc, setImageSrc] = useState(adminOnly ? '' : defaultSrc);
+  const imageCacheId = `${page}:${contentKey}`;
+  const [imageSrc, setImageSrc] = useState(
+    runtimeImageCache.get(imageCacheId) || (adminOnly ? '' : defaultSrc)
+  );
   const [isEditing, setIsEditing] = useState(false);
   const [uploading, setUploading] = useState(false);
   const { refreshContent, contentVersion } = useContent();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-de695671`;
-  const cacheKey = `image_cache_${page}_${contentKey}`;
+  const isAbsolutePositioned = /(^|\s)absolute(\s|$)/.test(className);
+
+  const addCacheBuster = (url: string, stamp?: string) => {
+    const version = stamp || Date.now().toString();
+    try {
+      const urlObj = new URL(url);
+      urlObj.searchParams.set('v', version);
+      return urlObj.toString();
+    } catch {
+      const separator = url.includes('?') ? '&' : '?';
+      return `${url}${separator}v=${encodeURIComponent(version)}`;
+    }
+  };
 
   // Load image on mount and when contentVersion changes
   useEffect(() => {
@@ -37,23 +54,9 @@ export function EditableImage({
   }, [page, contentKey, contentVersion]);
 
   const loadImage = async () => {
-    // Check cache first
     try {
-      const cached = sessionStorage.getItem(cacheKey);
-      if (cached) {
-        const cacheData = JSON.parse(cached);
-        if (cacheData.timestamp > Date.now() - 5 * 60 * 1000) { // 5 minutes cache
-          setImageSrc(cacheData.src);
-          return;
-        }
-      }
-    } catch (cacheError) {
-      // sessionStorage unavailable/disabled or parse error; continue with network load
-      console.debug('EditableImage cache not available:', cacheError);
-    }
-
-    try {
-      const response = await fetch(`${API_BASE}/content/${page}/${contentKey}`, {
+      const response = await fetch(`${API_BASE}/content/${page}/${contentKey}?_ts=${Date.now()}`, {
+        cache: 'no-store',
         headers: {
           'Authorization': `Bearer ${publicAnonKey}`,
         },
@@ -62,25 +65,28 @@ export function EditableImage({
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.data) {
-          setImageSrc(result.data.value);
-          // Cache the result, if possible
-          try {
-            sessionStorage.setItem(cacheKey, JSON.stringify({
-              src: result.data.value,
-              timestamp: Date.now(),
-            }));
-          } catch (setCacheError) {
-            console.debug('EditableImage cache set failed:', setCacheError);
-          }
+          const nextSrc = addCacheBuster(result.data.value, result.data.updatedAt);
+          setImageSrc(nextSrc);
+          runtimeImageCache.set(imageCacheId, nextSrc);
         } else {
-          setImageSrc(adminOnly ? '' : defaultSrc);
+          const fallback = adminOnly ? '' : defaultSrc;
+          setImageSrc(fallback);
+          runtimeImageCache.set(imageCacheId, fallback);
         }
       } else {
-        setImageSrc(adminOnly ? '' : defaultSrc);
+        // Use default only when content key doesn't exist yet.
+        // For transient/server errors keep current value to avoid wrong fallback image.
+        if (response.status === 404) {
+          const fallback = adminOnly ? '' : defaultSrc;
+          setImageSrc(fallback);
+          runtimeImageCache.set(imageCacheId, fallback);
+        }
       }
     } catch (err) {
       console.warn('Error loading image (using default):', err);
-      setImageSrc(adminOnly ? '' : defaultSrc);
+      if (!imageSrc) {
+        setImageSrc(adminOnly ? '' : defaultSrc);
+      }
     }
   };
 
@@ -112,6 +118,7 @@ export function EditableImage({
 
       const response = await fetch(`${API_BASE}/content/upload-image`, {
         method: 'POST',
+        cache: 'no-store',
         headers: {
           'Authorization': `Bearer ${publicAnonKey}`,
         },
@@ -121,7 +128,8 @@ export function EditableImage({
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.data) {
-          setImageSrc(result.data.value);
+          const nextSrc = addCacheBuster(result.data.value, result.data.updatedAt);
+          setImageSrc(nextSrc);
           setIsEditing(false);
           // Trigger global content refresh
           refreshContent();
@@ -136,6 +144,9 @@ export function EditableImage({
       alert('Не удалось загрузить изображение');
     } finally {
       setUploading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
 
@@ -145,7 +156,10 @@ export function EditableImage({
       alt={alt}
       className={className}
       loading="lazy"
-      onError={() => setImageSrc(adminOnly ? '' : defaultSrc)}
+      onError={() => {
+        // Re-fetch latest image metadata instead of forcing a fallback.
+        void loadImage();
+      }}
     />
   ) : (
     <div
@@ -159,8 +173,55 @@ export function EditableImage({
     return renderImage;
   }
 
+  const uploadPanel = (
+    <div className="bg-beige p-4 rounded-lg shadow-xl border border-purple/15">
+      <h3 className="text-lg font-bold text-purple mb-4">Загрузить новое изображение</h3>
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/jpeg,image/jpg,image/png,image/webp,image/svg+xml"
+        onChange={handleFileChange}
+        className="hidden"
+      />
+
+      <div className="flex gap-2">
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          disabled={uploading}
+          className="flex items-center gap-2 px-4 py-2 bg-green text-white rounded hover:bg-purple transition-colors disabled:opacity-50"
+        >
+          {uploading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Загрузка...
+            </>
+          ) : (
+            <>
+              <Upload className="w-4 h-4" />
+              Выбрать файл
+            </>
+          )}
+        </button>
+
+        <button
+          onClick={() => setIsEditing(false)}
+          disabled={uploading}
+          className="flex items-center gap-2 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors disabled:opacity-50"
+        >
+          <X className="w-4 h-4" />
+          Отмена
+        </button>
+      </div>
+
+      <p className="text-xs text-gray-500 mt-2">
+        JPEG, PNG, WebP или SVG (макс. 10МБ)
+      </p>
+    </div>
+  );
+
   return (
-    <div className="relative group inline-block">
+    <div className={`group ${isAbsolutePositioned ? 'absolute inset-0 z-0' : 'relative inline-block'}`}>
       {renderImage}
       
       {!isEditing && (
@@ -174,50 +235,15 @@ export function EditableImage({
       )}
 
       {isEditing && (
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded">
-          <div className="bg-beige p-4 rounded-lg shadow-xl">
-            <h3 className="text-lg font-bold text-purple mb-4">Загрузить новое изображение</h3>
-            
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/jpeg,image/jpg,image/png,image/webp,image/svg+xml"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-            
-            <div className="flex gap-2">
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={uploading}
-                className="flex items-center gap-2 px-4 py-2 bg-green text-white rounded hover:bg-purple transition-colors disabled:opacity-50"
-              >
-                {uploading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Загрузка...
-                  </>
-                ) : (
-                  <>
-                    <Upload className="w-4 h-4" />
-                    Выбрать файл
-                  </>
-                )}
-              </button>
-              
-              <button
-                onClick={() => setIsEditing(false)}
-                disabled={uploading}
-                className="flex items-center gap-2 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors disabled:opacity-50"
-              >
-                <X className="w-4 h-4" />
-                Отмена
-              </button>
-            </div>
-            
-            <p className="text-xs text-gray-500 mt-2">
-              JPEG, PNG, WebP или SVG (макс. 10МБ)
-            </p>
+        <div
+          className={
+            isAbsolutePositioned
+              ? 'absolute top-4 right-4 z-20'
+              : 'absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded'
+          }
+        >
+          <div className={isAbsolutePositioned ? '' : ''}>
+            {uploadPanel}
           </div>
         </div>
       )}

@@ -4,6 +4,55 @@ import { projectId, publicAnonKey } from '/utils/supabase/info';
 import { useContent } from '../context/ContentContext';
 import { useLanguage } from '../context/LanguageContext';
 
+type PageContentMap = Record<string, string>;
+const pageContentPromiseCache = new Map<string, Promise<PageContentMap>>();
+const pageContentValueCache = new Map<string, PageContentMap>();
+
+async function loadPageContent(apiBase: string, page: string, version: number): Promise<PageContentMap> {
+  const cacheId = `${page}:${version}`;
+
+  if (pageContentValueCache.has(cacheId)) {
+    return pageContentValueCache.get(cacheId)!;
+  }
+
+  if (pageContentPromiseCache.has(cacheId)) {
+    return pageContentPromiseCache.get(cacheId)!;
+  }
+
+  const request = (async () => {
+    const response = await fetch(`${apiBase}/content/${page}?_ts=${Date.now()}`, {
+      cache: 'no-store',
+      headers: {
+        'Authorization': `Bearer ${publicAnonKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      return {};
+    }
+
+    const result = await response.json();
+    if (!result.success || !Array.isArray(result.data)) {
+      return {};
+    }
+
+    const map: PageContentMap = {};
+    for (const item of result.data) {
+      if (item?.key && typeof item.value === 'string') {
+        map[item.key] = item.value;
+      }
+    }
+
+    pageContentValueCache.set(cacheId, map);
+    return map;
+  })();
+
+  pageContentPromiseCache.set(cacheId, request);
+  request.finally(() => pageContentPromiseCache.delete(cacheId));
+
+  return request;
+}
+
 interface EditableTextProps {
   page: string;
   contentKey: string;
@@ -26,115 +75,40 @@ export function EditableText({
   multiline = false,
 }: EditableTextProps) {
   const { language } = useLanguage();
-  const cacheKey = `text_cache_${page}_${contentKey}_${language}`;
-  const legacyCacheKey = `text_cache_${page}_${contentKey}`;
   const localizedContentKey = `${contentKey}_${language}`;
-
-  const getCachedValue = () => {
-    try {
-      const cached = localStorage.getItem(cacheKey);
-      if (!cached) {
-        // Backward compatibility for old cache keys. Use this only for LV.
-        if (language !== 'lv') return null;
-        const legacyCached = localStorage.getItem(legacyCacheKey);
-        if (!legacyCached) return null;
-
-        const legacyCacheData = JSON.parse(legacyCached);
-        if (typeof legacyCacheData?.value === 'string') {
-          return legacyCacheData.value as string;
-        }
-        return null;
-      }
-
-      const cacheData = JSON.parse(cached);
-      if (typeof cacheData?.value === 'string') {
-        return cacheData.value as string;
-      }
-    } catch (cacheError) {
-      console.debug('EditableText cache not available:', cacheError);
-    }
-
-    return null;
-  };
-
-  const initialCachedValue = getCachedValue();
-  const [value, setValue] = useState(initialCachedValue ?? '');
+  const [value, setValue] = useState(defaultValue);
   const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState(initialCachedValue ?? '');
-  const [loading, setLoading] = useState(!initialCachedValue);
+  const [editValue, setEditValue] = useState(defaultValue);
   const { refreshContent, contentVersion } = useContent();
 
   const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-de695671`;
 
   // Load content on mount and when contentVersion changes
   useEffect(() => {
-    const cachedValue = getCachedValue();
-    if (cachedValue !== null) {
-      setValue(cachedValue);
-      setEditValue(cachedValue);
-      setLoading(false);
-    } else {
-      setValue('');
-      setEditValue('');
-      setLoading(true);
-    }
-
+    setValue(defaultValue);
+    setEditValue(defaultValue);
     loadContent();
-  }, [page, contentKey, contentVersion, language]);
+  }, [page, contentKey, contentVersion, language, defaultValue]);
 
   const loadContent = async () => {
     try {
-      const response = await fetch(`${API_BASE}/content/${page}/${localizedContentKey}`, {
-        headers: {
-          'Authorization': `Bearer ${publicAnonKey}`,
-        },
-      });
+      const pageContent = await loadPageContent(API_BASE, page, contentVersion);
+      const localizedValue = pageContent[localizedContentKey];
+      const legacyValue = language === 'lv' ? pageContent[contentKey] : undefined;
+      const nextValue = localizedValue ?? legacyValue ?? defaultValue;
 
-      if (response.ok) {
-        const result = await response.json();
-        if (result.success && result.data) {
-          setValue(result.data.value);
-          setEditValue(result.data.value);
-          try {
-            localStorage.setItem(cacheKey, JSON.stringify({
-              value: result.data.value,
-              timestamp: Date.now(),
-            }));
-          } catch (setCacheError) {
-            console.debug('EditableText cache set failed:', setCacheError);
-          }
-        } else {
-          // For LV only, try legacy key without language suffix.
-          if (language === 'lv') {
-            const legacyResponse = await fetch(`${API_BASE}/content/${page}/${contentKey}`, {
-              headers: {
-                'Authorization': `Bearer ${publicAnonKey}`,
-              },
-            });
-
-            if (legacyResponse.ok) {
-              const legacyResult = await legacyResponse.json();
-              if (legacyResult.success && legacyResult.data) {
-                setValue(legacyResult.data.value);
-                setEditValue(legacyResult.data.value);
-                return;
-              }
-            }
-          }
-          setValue(defaultValue);
-          setEditValue(defaultValue);
-        }
-      } else {
-        setValue(defaultValue);
-        setEditValue(defaultValue);
-      }
+      setValue(nextValue);
+      setEditValue(nextValue);
     } catch (err) {
       console.warn('Error loading content (using default):', err);
       setValue(defaultValue);
       setEditValue(defaultValue);
-    } finally {
-      setLoading(false);
     }
+  };
+
+  const clearPageContentCache = () => {
+    pageContentPromiseCache.clear();
+    pageContentValueCache.clear();
   };
 
   const handleSave = async () => {
@@ -154,15 +128,7 @@ export function EditableText({
       if (response.ok) {
         setValue(editValue);
         setIsEditing(false);
-        try {
-          localStorage.setItem(cacheKey, JSON.stringify({
-            value: editValue,
-            timestamp: Date.now(),
-          }));
-        } catch (setCacheError) {
-          console.debug('EditableText cache set failed:', setCacheError);
-        }
-        // Trigger global content refresh
+        clearPageContentCache();
         refreshContent();
       } else {
         alert('Не удалось сохранить контент');
@@ -177,10 +143,6 @@ export function EditableText({
     setEditValue(value);
     setIsEditing(false);
   };
-
-  if (loading) {
-    return <Component className={className} style={style}>&nbsp;</Component>;
-  }
 
   if (!isAdmin) {
     return <Component className={className} style={style}>{value || defaultValue}</Component>;
@@ -228,11 +190,11 @@ export function EditableText({
   }
 
   return (
-    <div className="relative group inline-block w-full">
+    <div className="relative group inline-block w-full pr-8">
       <Component className={className} style={style}>{value || defaultValue}</Component>
       <button
         onClick={() => setIsEditing(true)}
-        className="absolute -right-8 top-0 p-1 bg-green text-white rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-purple"
+        className="absolute right-1 top-1 p-1 bg-green text-white rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-purple"
         title="Редактировать текст"
       >
         <Edit2 className="w-4 h-4" />

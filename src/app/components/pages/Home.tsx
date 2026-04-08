@@ -109,9 +109,9 @@ export function Home() {
               contentKey="hero-image-transparent"
               src={heroDog}
               alt="French bulldog"
-              className="pointer-events-none absolute bottom-0 right-[2%] z-0 h-[calc(100%+2rem)] sm:right-[4%] sm:h-[calc(100%+2.5rem)] lg:right-[6%] lg:h-[calc(100%+3rem)] w-auto object-contain object-bottom drop-shadow-[0_24px_34px_rgba(22,17,20,0.34)] translate-y-3"
+              className="pointer-events-none absolute bottom-0 right-[-44%] z-0 h-[calc(100%+1rem)] sm:right-[-22%] sm:h-[calc(100%+2.2rem)] lg:right-[-8%] lg:h-[calc(100%+3rem)] w-auto object-contain object-bottom drop-shadow-[0_24px_34px_rgba(22,17,20,0.34)] translate-y-3"
             />
-            <div className="relative z-10 max-w-[52%] sm:max-w-[46%]">
+            <div className="relative z-10 max-w-[50%] sm:max-w-[46%]">
               <img
                 src={heroLogo}
                 alt="ABU Vet logo"
@@ -153,7 +153,7 @@ export function Home() {
       {/* Stats Section */}
       <section className="py-8">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2">
+          <div className="grid grid-cols-2 gap-x-6 sm:gap-x-8">
             {stats.map((stat, index) => (
               <div key={index} className="py-5 pr-4">
                 <EditableText
@@ -161,7 +161,7 @@ export function Home() {
                   contentKey={`stat-value-${index}`}
                   defaultValue={stat.value}
                   as="div"
-                  className="mb-1 text-[3.2rem] font-bold leading-none text-purple"
+                  className="mb-1 text-[2.75rem] sm:text-[3.2rem] font-bold leading-none text-purple"
                   style={{ fontFamily: 'var(--font-heading)' }}
                   isAdmin={isEditMode && user?.isAdmin}
                   multiline={false}
@@ -292,8 +292,8 @@ export function Home() {
                   contentKey={`feature-title-${index}`}
                   defaultValue={t(feature.titleKey)}
                   as="h3"
-                  className="text-[1.3rem] uppercase leading-tight"
-                  style={{ fontFamily: 'var(--font-heading)' }}
+                  className="text-[1.02rem] sm:text-[1.3rem] uppercase leading-tight break-words"
+                  style={{ fontFamily: 'var(--font-heading)', hyphens: 'auto', overflowWrap: 'anywhere' }}
                   isAdmin={isEditMode && user?.isAdmin}
                   multiline={false}
                 />

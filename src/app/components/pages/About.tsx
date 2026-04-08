@@ -28,7 +28,7 @@ export function About() {
     },
     {
       icon: Award,
-      title: { lv: 'Profesionalitāte', ru: 'Профессионализм', en: 'Professionalism' },
+      title: { lv: 'Profesionalitāte', ru: 'Профессиона\u00ADлизм', en: 'Professionalism' },
       description: {
         lv: 'Mūsu komandā strādā tikai sertificēti speciālisti',
         ru: 'В нашей команде работают только сертифицированные специалисты',
@@ -126,7 +126,15 @@ export function About() {
                 <div className="w-20 h-20 bg-mint rounded-full flex items-center justify-center mx-auto mb-4">
                   <Icon className="w-10 h-10 text-green" />
                 </div>
-                <h3 className="mb-2 text-purple text-2xl">{value.title[language]}</h3>
+                <h3
+                  lang={language}
+                  className={`mx-auto mb-2 block max-w-[13ch] text-center text-purple text-xl leading-tight ${
+                    language === 'lv' && index === 1 ? '-translate-x-1' : ''
+                  }`}
+                  style={{ hyphens: 'auto', overflowWrap: 'normal', wordBreak: 'normal' }}
+                >
+                  {value.title[language]}
+                </h3>
                 <p className="text-purple/75">{value.description[language]}</p>
               </div>
             );

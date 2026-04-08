@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router';
-import { Users, Calendar, Settings, Plus, Edit, Trash2, AlertCircle, Clock, X } from 'lucide-react';
+import { Users, Calendar, Settings, Plus, Edit, Trash2, AlertCircle, Image } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { DoctorModal } from '../DoctorModal';
 import { ScheduleModal } from '../ScheduleModal';
 import { ServiceModal } from '../ServiceModal';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { EditableImage } from '../EditableImage';
 import { projectId, publicAnonKey } from '/utils/supabase/info';
+import heroDog from '../../../assets/dog-transparent.png';
 
 interface Doctor {
   id: string;
@@ -69,7 +71,7 @@ interface Service {
 export function AdminPanel() {
   const { t, language } = useLanguage();
   const { user, isAuthenticated } = useAuth();
-  const [activeTab, setActiveTab] = useState<'doctors' | 'services' | 'schedule' | 'appointments'>('doctors');
+  const [activeTab, setActiveTab] = useState<'doctors' | 'services' | 'schedule' | 'appointments' | 'content'>('doctors');
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
@@ -458,6 +460,16 @@ export function AdminPanel() {
     { id: 'services' as const, label: t('admin.services'), icon: Settings },
     { id: 'schedule' as const, label: t('admin.schedule'), icon: Calendar },
     { id: 'appointments' as const, label: t('admin.appointments'), icon: Calendar },
+    {
+      id: 'content' as const,
+      label:
+        language === 'lv'
+          ? 'Saturs'
+          : language === 'ru'
+          ? 'Контент'
+          : 'Content',
+      icon: Image,
+    },
   ];
 
   return (
@@ -822,6 +834,33 @@ export function AdminPanel() {
                       })}
                     </div>
                   )}
+                </div>
+              )}
+
+              {/* Content Tab */}
+              {activeTab === 'content' && (
+                <div>
+                  <h2 className="text-2xl text-purple mb-3">
+                    {language === 'lv' && 'Galvenais foto'}
+                    {language === 'ru' && 'Главное фото'}
+                    {language === 'en' && 'Main Hero Image'}
+                  </h2>
+                  <p className="text-purple/75 mb-6">
+                    {language === 'lv' && 'Noklikšķiniet uz attēla rediģēšanas ikonas, lai augšupielādētu jaunu galveno foto.'}
+                    {language === 'ru' && 'Нажмите на иконку редактирования на изображении, чтобы загрузить новое главное фото.'}
+                    {language === 'en' && 'Click the edit icon on the image to upload a new main photo.'}
+                  </p>
+
+                  <div className="rounded-2xl border border-purple/15 bg-beige p-4 sm:p-6">
+                    <EditableImage
+                      page="home"
+                      contentKey="hero-image-transparent"
+                      defaultSrc={heroDog}
+                      alt="Main hero image"
+                      className="mx-auto h-[320px] sm:h-[420px] w-auto max-w-full object-contain"
+                      isAdmin={true}
+                    />
+                  </div>
                 </div>
               )}
             </div>

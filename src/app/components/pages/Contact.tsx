@@ -228,12 +228,15 @@ export function Contact() {
               {language === 'ru' && 'Как нас найти'}
               {language === 'en' && 'How to find us'}
             </h2>
-            <div className="bg-beige rounded-2xl overflow-hidden h-96 flex items-center justify-center border-4 border-green">
-              <p className="text-purple/80 font-semibold">
-                {language === 'lv' && 'Karte (integrējiet Google Maps)'}
-                {language === 'ru' && 'Карта (интегрируйте Google Maps)'}
-                {language === 'en' && 'Map (integrate Google Maps)'}
-              </p>
+            <div className="bg-beige rounded-2xl overflow-hidden h-96 border-4 border-green">
+              <iframe
+                title="ABU Vet location map"
+                src="https://www.google.com/maps?q=Vestienas+2J,+Riga,+LV-1035,+Latvia&output=embed"
+                className="h-full w-full"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
             </div>
           </div>
         </div>

@@ -1,9 +1,14 @@
 import { useLanguage } from '../../context/LanguageContext';
 import { Link } from 'react-router';
 import { ArrowRight } from 'lucide-react';
+import { useEditMode } from '../../context/EditModeContext';
+import { useAuth } from '../../context/AuthContext';
+import { EditableText } from '../EditableText';
 
 export function Prices() {
   const { t, language } = useLanguage();
+  const { isEditMode } = useEditMode();
+  const { user } = useAuth();
 
   const priceCategories = [
     {
@@ -282,7 +287,15 @@ export function Prices() {
             {priceCategories.map((category, index) => (
               <div key={index} className="abuvet-surface overflow-hidden">
                 <div className="bg-mint/55 text-purple px-8 py-4 border-b border-purple/15">
-                  <h2 className="text-2xl">{category.category[language]}</h2>
+                  <EditableText
+                    page="prices"
+                    contentKey={`category-${index}-title`}
+                    defaultValue={category.category[language]}
+                    as="h2"
+                    className="text-2xl"
+                    isAdmin={isEditMode && user?.isAdmin}
+                    multiline={false}
+                  />
                 </div>
                 <div className="p-8">
                   <div className="space-y-4">
@@ -291,10 +304,24 @@ export function Prices() {
                         key={serviceIndex}
                         className="flex justify-between items-center py-4 border-b border-mint last:border-0"
                       >
-                        <span className="text-purple/85 text-lg">{service.name[language]}</span>
-                        <span className="text-green font-semibold text-xl">
-                          {service.price}
-                        </span>
+                        <EditableText
+                          page="prices"
+                          contentKey={`category-${index}-service-${serviceIndex}-name`}
+                          defaultValue={service.name[language]}
+                          as="span"
+                          className="text-purple/85 text-lg"
+                          isAdmin={isEditMode && user?.isAdmin}
+                          multiline={false}
+                        />
+                        <EditableText
+                          page="prices"
+                          contentKey={`category-${index}-service-${serviceIndex}-price`}
+                          defaultValue={service.price}
+                          as="span"
+                          className="text-green font-semibold text-xl"
+                          isAdmin={isEditMode && user?.isAdmin}
+                          multiline={false}
+                        />
                       </div>
                     ))}
                   </div>

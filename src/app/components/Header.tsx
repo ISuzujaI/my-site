@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { Menu, X, User } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
-import logo from '../../assets/c185aac12eda49255a8fe97956980cbd0adda400.png';
+import logo from '../../assets/ABU - logo - purple.png';
 
 const PHONE_DISPLAY = '+371 20123456';
 const PHONE_LINK = '+37120123456';
@@ -35,13 +35,13 @@ export function Header() {
       <div className="abuvet-container">
         <div className="flex min-h-20 items-center justify-between gap-4 py-3">
           <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Abuvet" className="h-10 w-10 object-contain" />
+            <img src={logo} alt="Abuvet" className="h-14 w-auto object-contain" />
           </Link>
 
           <nav className="hidden items-center gap-6 lg:flex">
             <Link
               to="/"
-              className={`text-sm font-semibold transition-colors ${
+              className={`font-semibold transition-colors ${
                 isActive('/') ? 'text-green' : 'text-purple hover:text-green'
               }`}
             >
